@@ -33,13 +33,28 @@
 
             <button class="btn-aba" id="btn-toggle">▶ Mostrar Desenvolvimento Algébrico</button>
             <div id="conteudo-calculo" class="hidden">
-                <div class="math-box">
-                    <strong>Memorial de Cálculo:</strong><br>
-                    Q = ∬<sub>D</sub> ρ · c · T(x,y) dA<br>
-                    Q = 0,594 · ∬<sub>D</sub> [150e<sup>-0,1(x²+y²)</sup> + 40] dx dy<br>
-                    Q = 4084,34 + 1900,8<br>
-                    <strong>Q ≈ 4.564,48 cal</strong>
-                </div>
+<div class="math-box">
+    <strong>Memorial de Cálculo Detalhado:</strong><br><br>
+    
+    1. Definição da Integral com constantes ($\rho \cdot c = 0,594$):<br>
+    \( Q = 0,594 \iint_D [150e^{-0,1(x^2+y^2)} + 40] \, dA \)<br><br>
+
+    2. Decomposição pela Linearidade:<br>
+    \( Q = 0,594 \left( \iint_D 150e^{-0,1(x^2+y^2)} dA + \iint_D 40 dA \right) \)<br><br>
+
+    3. Separação de Variáveis (Teorema de Fubini):<br>
+    \( Q_{pico} = 89,1 \left( \int_{-5}^{5} e^{-0,1x^2} dx \right) \left( \int_{-4}^{4} e^{-0,1y^2} dy \right) \)<br><br>
+
+    4. Cálculo da Base Térmica (Área = 80 cm²):<br>
+    \( Q_{base} = 0,594 \times (40 \times 80) = 1900,80 \text{ cal} \)<br><br>
+
+    5. Integração Numérica das Gaussianas:<br>
+    \( Q_{pico} \approx 89,1 \times (5,306 \times 4,963) \approx 4084,34 \text{ cal} \)<br><br>
+
+    <strong>Soma Final:</strong><br>
+    Q = 4084,34 + 1900,80<br>
+    <strong>Q ≈ 4.564,48 cal</strong>
+</div>
             </div>
         </section>
     </main>
