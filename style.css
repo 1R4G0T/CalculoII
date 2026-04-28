@@ -35,7 +35,9 @@ canvas { border: 1px solid #ddd; border-radius: 4px; max-width: 100%; }
 .valor-destaque { font-size: 2.5rem; font-weight: bold; }
 
 .btn-aba { width: 100%; padding: 15px; background: var(--primaria); color: white; border: none; border-radius: 6px; cursor: pointer; }
-.hidden { display: none !important; }
+.hidden {
+    display: none;
+}
 .math-box { background: #fff; border-left: 5px solid var(--secundaria); padding: 15px; margin-top: 10px; }
 
 @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
