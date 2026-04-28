@@ -2,40 +2,35 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Cálculo II - Memorial Interativo e Visual</title>
+    <title>Cálculo II - Memorial Completo</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
     <header>
         <h1>Análise Térmica Industrial</h1>
-        <p>Estudo de Integral Dupla sobre Chapas de Alumínio</p>
+        <p>Estudo de Integral Dupla: Alumínio</p>
     </header>
 
     <main>
         <section class="painel-graficos">
-            
             <div class="container-visualizacao">
-                <h3>1. Distribuição de Temperatura T(x,y) [3D]</h3>
+                <h3>1. Distribuição T(x,y) [3D]</h3>
                 <div id="plot3d"></div>
-                <p class="legenda-didatica">Este gráfico mostra o "sino de calor" sobre a chapa.</p>
             </div>
 
             <div class="container-visualizacao">
                 <h3>2. Domínio D e Elemento dA [2D]</h3>
                 <canvas id="meuGrafico2d" width="400" height="300"></canvas>
                 <div class="formula-principal">
-                    ∬<sub>D</sub> ρ · c · T(x, y) <span class="dxdy">dx dy</span>
+                    ∬<sub>D</sub> ρ·c·T(x,y) <span class="dxdy">dx dy</span>
                 </div>
-                <p class="legenda-didatica">Aqui definimos a região de integração e o elemento dA.</p>
             </div>
 
-             <div class="container-visualizacao">
-                <h3>3. Conceito Didático: O Cubinho dA em Volume</h3>
+            <div class="container-visualizacao">
+                <h3>3. Elemento de Volume (dA × T)</h3>
                 <div id="diagrama-da-3d"></div>
-                <p class="legenda-didatica">Representação diagramática de como dx, dy e T formam o elemento de volume.</p>
             </div>
-
         </section>
 
         <section class="painel-info">
@@ -45,22 +40,19 @@
             </div>
 
             <div class="aba-calculo">
-                <button id="btn-toggle-calculo" class="botao-aba" onclick="toggleCalculo()">▶ Mostrar Passo a Passo do Cálculo</button>
-                
+                <button id="btn-toggle" class="botao-aba">▶ Mostrar Passo a Passo</button>
                 <div id="conteudo-calculo" class="escondido">
                     <div class="passo">
-                        <h4>Passo 1: Definição da Integral</h4>
-                        <p>Substituímos os valores constantes de ρ (2,7) e c (0,22), que multiplicados resultam em <strong>0,594</strong>.</p>
+                        <h4>Passo 1: Constantes</h4>
+                        <p>ρ · c = 2,70 · 0,22 = <strong>0,594</strong>.</p>
                     </div>
-
                     <div class="passo">
-                        <h4>Passo 2: A Função de Temperatura</h4>
-                        <p>Integramos T(x,y) = 150e<sup>-0,1(x²+y²)</sup> + 40 nos limites de x[-5,5] e y[-4,4].</p>
+                        <h4>Passo 2: Função</h4>
+                        <p>T(x,y) = 150e<sup>-0,1(x²+y²)</sup> + 40.</p>
                     </div>
-
                     <div class="passo">
-                        <h4>Passo 3: Integração Numérica</h4>
-                        <p>Devido à natureza da função exponencial, utilizamos a aproximação numérica para calcular o volume total de energia acumulada.</p>
+                        <h4>Passo 3: Domínio</h4>
+                        <p>D = {(x,y) | -5 ≤ x ≤ 5, -4 ≤ y ≤ 4}.</p>
                     </div>
                 </div>
             </div>
