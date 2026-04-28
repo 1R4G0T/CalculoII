@@ -21,6 +21,13 @@ main {
     box-sizing: border-box; /* Evita que o padding empurre o gráfico para fora */
 }
 
+.math-box {
+    font-size: 0.9rem; /* Diminui levemente a fonte para caber tudo */
+    line-height: 1.4;  /* Espaçamento entre linhas confortável */
+    overflow-y: auto;  /* Adiciona scroll interno se o texto crescer demais */
+    max-height: 400px; /* Limita a altura para não empurrar o rodapé */
+}
+
 #plot3d { width: 100%; height: 350px; }
 canvas { border: 1px solid #ddd; border-radius: 4px; max-width: 100%; }
 
