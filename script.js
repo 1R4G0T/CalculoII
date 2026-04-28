@@ -9,12 +9,10 @@ window.onload = function() {
                 const estaVisivel = conteudo.classList.toggle('visible');
                 conteudo.classList.toggle('hidden', !estaVisivel);
                 
-                // Altera o ícone/texto do botão
                 const textoBase = this.innerText.replace(/[▶▼]\s*/, "");
                 this.innerHTML = estaVisivel ? `▼ Esconder ${textoBase}` : `▶ Mostrar ${textoBase}`;
                 
                 if (estaVisivel) {
-                    // Ajustes de renderização necessários ao abrir
                     Plotly.Plots.resize('plot3d');
                     if (window.MathJax) MathJax.typesetPromise([conteudo]);
                 }
@@ -22,18 +20,15 @@ window.onload = function() {
         }
     }
 
-    // Ativa as duas abas
     configurarBotao('btn-toggle', 'conteudo-calculo');
     configurarBotao('btn-analise', 'conteudo-analise');
 
-    // ... restante das funções getTempAt e Gráficos ...
-};
-
+    // 2. Lógica de Temperatura
     function getTempAt(x, y) {
         return 150 * Math.exp(-0.1 * (x**2 + y**2)) + 40;
     }
 
-    // 2. Gráfico 3D
+    // 3. Renderização do Gráfico 3D (Plotly)
     const xValues = [], yValues = [], zValues = [];
     for(let i=-6; i<=6; i+=0.4) xValues.push(i);
     for(let j=-5; j<=5; j+=0.4) yValues.push(j);
@@ -50,26 +45,30 @@ window.onload = function() {
         z: zValues, x: xValues, y: yValues, type: 'surface', colorscale: 'Hot'
     }], { 
         margin: {l:0, r:0, b:0, t:0},
-        autosize: true
+        autosize: true 
     });
 
-    // 3. Canvas 2D
+    // 4. Canvas 2D - Domínio D com dA (dx * dy)
     const escala = 25; 
-
-    // Domínio D
     const cv2d = document.getElementById('meuGrafico2d');
     if (cv2d) {
         const ctx = cv2d.getContext('2d');
         const cx = cv2d.width / 2; const cy = cv2d.height / 2;
+        
+        // Área total da chapa
         ctx.fillStyle = 'rgba(52, 152, 219, 0.15)';
         ctx.fillRect(cx - 5 * escala, cy - 4 * escala, 10 * escala, 8 * escala);
         ctx.strokeStyle = '#2980b9';
         ctx.strokeRect(cx - 5 * escala, cy - 4 * escala, 10 * escala, 8 * escala);
+        
+        // Elemento diferencial dA
         ctx.fillStyle = '#e74c3c';
         ctx.fillRect(cx + 2 * escala, cy - 2 * escala, 15, 15);
+        ctx.font = '10px Arial';
+        ctx.fillText('dA (dx.dy)', cx + 2 * escala, cy - 2 * escala - 5);
     }
 
-    // --- GRÁFICO DE CORTE (Perfil Lateral em y=0) ---
+    // 5. Gráfico de Corte (Perfil em y=0)
     const cvCorte = document.getElementById('graficoCorte');
     if (cvCorte) {
         const ctx = cvCorte.getContext('2d');
@@ -77,14 +76,8 @@ window.onload = function() {
         const cy = cvCorte.height - 50; 
 
         ctx.clearRect(0, 0, cvCorte.width, cvCorte.height);
-
-        // 1. Eixo X (Chão do gráfico)
-        ctx.strokeStyle = '#333';
-        ctx.beginPath();
-        ctx.moveTo(20, cy); ctx.lineTo(cvCorte.width - 20, cy);
-        ctx.stroke();
-
-        // 2. Desenha a Curva de Temperatura
+        
+        // Desenho da Curva
         ctx.beginPath();
         ctx.strokeStyle = '#e67e22';
         ctx.lineWidth = 2;
@@ -95,20 +88,15 @@ window.onload = function() {
         }
         ctx.stroke();
 
-        // 3. O PILAR DIFERENCIAL (Representando dx)
-        // Definimos o pilar em x = 2 para coincidir com o gráfico 2D
+        // Pilar diferencial dx
         const xPosSimulado = 2;
         const posX = cx + xPosSimulado * escala;
-        const larguraDx = 15; // Largura visual do dx
+        const larguraDx = 15;
         const alturaPilar = getTempAt(xPosSimulado, 0) * 0.8;
         
-        // Desenha o preenchimento do pilar
         ctx.fillStyle = 'rgba(231, 76, 60, 0.6)';
         ctx.fillRect(posX, cy - alturaPilar, larguraDx, alturaPilar);
-        
-        // Adiciona os textos indicativos
         ctx.fillStyle = '#333';
-        ctx.font = '12px Arial';
-        ctx.fillText('T(x,0)', posX - 10, cy - alturaPilar - 10);
         ctx.fillText('dx', posX + 2, cy + 15);
     }
+}; // Fim do window.onload
