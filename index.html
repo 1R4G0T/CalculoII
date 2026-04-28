@@ -2,47 +2,54 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memorial de Cálculo - Integral Dupla</title>
+    <title>Cálculo II - Memorial Interativo</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>Análise de Calor: Integral Dupla</h1>
-        <p>Estudo do elemento infinitesimal dA = dx · dy</p>
+        <h1>Análise Térmica Industrial</h1>
+        <p>Estudo de Integral Dupla sobre Chapas de Alumínio</p>
     </header>
 
     <main>
-        <section id="canvas-container">
-            <h2>Representação da Região D</h2>
-            <canvas id="meuGrafico2d" width="500" height="400"></canvas>
-            <p class="legenda">O retângulo vermelho representa o elemento infinitesimal de área.</p>
+        <section class="painel-grafico">
+            <h2>Domínio da Chapa (D)</h2>
+            <canvas id="meuGrafico2d" width="450" height="350"></canvas>
+            <div class="formula-principal">
+                ∬<sub>D</sub> ρ · c · T(x, y) <span class="dxdy">dx dy</span>
+            </div>
         </section>
 
-        <section id="calculo-container">
-            <h2>Memorial de Cálculo</h2>
-            
-            <div class="card">
-                <h3>A Integral de Calor</h3>
-                <p>Para calcular o calor total, somamos as contribuições de cada elemento infinitesimal:</p>
-                
-                <div class="formula-quadro">
-                    <span class="sig-integral">∬</span> 
-                    <span class="limite-d">D</span>
-                    <span class="expressao">ρ · c · T(x, y) <strong>dx dy</strong></span>
-                </div>
+        <section class="painel-info">
+            <div class="card-resultado">
+                <h3>Resultado Final</h3>
+                <div class="valor-final">Q ≈ 4.564,48 cal</div>
             </div>
 
-            <div class="card">
-                <h3>Dados do Problema</h3>
-                <ul>
-                    <li><strong>Densidade (ρ):</strong> 2,70 g/cm³</li>
-                    <li><strong>Calor Específico (c):</strong> 0,22 cal/g °C</li>
-                    <li><strong>Domínio D:</strong> x ∈ [-5, 5], y ∈ [-4, 4]</li>
-                </ul>
-                <hr>
-                <p><strong>Resultado Final:</strong></p>
-                <h1 class="resultado">Q ≈ 4.564,48 cal</h1>
+            <div class="aba-calculo">
+                <button class="botao-aba" onclick="toggleCalculo()">▶ Mostrar Passo a Passo do Cálculo</button>
+                
+                <div id="conteudo-passo-a-passo" class="escondido">
+                    <div class="passo">
+                        <h4>Passo 1: Definição da Integral</h4>
+                        <p>Substituímos os valores constantes de ρ (2,7) e c (0,22), que multiplicados resultam em <strong>0,594</strong>.</p>
+                    </div>
+
+                    <div class="passo">
+                        <h4>Passo 2: A Função de Temperatura</h4>
+                        <p>Integramos T(x,y) = 150e<sup>-0,1(x²+y²)</sup> + 40 nos limites de x[-5,5] e y[-4,4].</p>
+                    </div>
+
+                    <div class="passo">
+                        <h4>Passo 3: Decomposição</h4>
+                        <p>A integral é dividida em duas partes: o calor da base constante (40°C) e o pico de calor central (exponencial).</p>
+                    </div>
+
+                    <div class="passo">
+                        <h4>Passo 4: Integração Numérica</h4>
+                        <p>Como a função exponencial não tem primitiva simples, utilizamos a aproximação numérica para chegar ao volume total de energia.</p>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
