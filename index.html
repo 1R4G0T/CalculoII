@@ -35,25 +35,32 @@
             <button class="btn-aba" id="btn-toggle">▶ Mostrar Desenvolvimento Algébrico</button>
             <div id="conteudo-calculo" class="hidden">
 <div class="math-box">
-    <strong>Memorial de Cálculo Detalhado:</strong><br><br>
+    <strong>Memorial de Cálculo Detalhado</strong><br><br>
     
-    1. Definição da Integral com constantes ($\rho \cdot c = 0,594$):<br>
+    <p>Para calcular a energia térmica total ($Q$), utilizamos as propriedades do alumínio onde o produto da densidade pelo calor específico ($\rho \cdot c$) resulta em $0,594$.</p>
+
+    <strong>1. Montagem da Integral Dupla:</strong><br>
     \( Q = 0,594 \iint_D [150e^{-0,1(x^2+y^2)} + 40] \, dA \)<br><br>
 
-    2. Decomposição pela Linearidade:<br>
+    <strong>2. Divisão por Linearidade:</strong><br>
+    <p>Separamos o cálculo em duas partes: o calor gerado pelo pico central e a energia basal da chapa.</p>
     \( Q = 0,594 \left( \iint_D 150e^{-0,1(x^2+y^2)} dA + \iint_D 40 dA \right) \)<br><br>
 
-    3. Separação de Variáveis (Teorema de Fubini):<br>
+    <strong>3. Aplicação do Teorema de Fubini:</strong><br>
+    <p>Como a região $D$ é retangular, separamos as variáveis $x$ e $y$ para resolver como integrais simples.</p>
     \( Q_{pico} = 89,1 \left( \int_{-5}^{5} e^{-0,1x^2} dx \right) \left( \int_{-4}^{4} e^{-0,1y^2} dy \right) \)<br><br>
 
-    4. Cálculo da Base Térmica (Área = 80 cm²):<br>
-    \( Q_{base} = 0,594 \times (40 \times 80) = 1900,80 \text{ cal} \)<br><br>
+    <strong>4. Energia da Base Térmica:</strong><br>
+    <p>Calculada sobre a área total de $80\text{ cm}^2$ com temperatura constante.</p>
+    \( Q_{base} = 0,594 \times (40 \times 80) = 1900,80\text{ cal} \)<br><br>
 
-    5. Integração Numérica das Gaussianas:<br>
-    \( Q_{pico} \approx 89,1 \times (5,306 \times 4,963) \approx 4084,34 \text{ cal} \)<br><br>
+    <strong>5. Resultado do Pico de Calor:</strong><br>
+    <p>Utilizando integração numérica para as funções gaussianas:</p>
+    \( Q_{pico} \approx 89,1 \times (5,306 \times 4,963) \approx 4084,34\text{ cal} \)<br><br>
 
-    <strong>Soma Final:</strong><br>
-    Q = 4084,34 + 1900,80<br>
+    <hr>
+    <strong>Soma Final das Energias:</strong><br>
+    \( Q = 4084,34 + 1900,80 \)<br>
     <strong>Q ≈ 4.564,48 cal</strong>
 </div>
             </div>
