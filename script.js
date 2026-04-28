@@ -48,3 +48,21 @@ window.onload = function() {
         ctx.stroke();
     }
 };
+const btnToggle = document.getElementById('btn-toggle');
+const conteudo = document.getElementById('conteudo-calculo');
+
+btnToggle.addEventListener('click', () => {
+    // 1. Abre ou fecha a aba
+    conteudo.classList.toggle('hidden');
+
+    // 2. Muda o texto do botão
+    if (conteudo.classList.contains('hidden')) {
+        btnToggle.innerText = '▶ Mostrar Desenvolvimento Algébrico';
+    } else {
+        btnToggle.innerText = '▼ Esconder Desenvolvimento Algébrico';
+        
+        // 3. ESSA É A LINHA MÁGICA:
+        // Ela manda o MathJax procurar fórmulas novas e desenhá-las
+        MathJax.typesetPromise([conteudo]);
+    }
+});
