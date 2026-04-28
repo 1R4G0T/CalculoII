@@ -17,7 +17,7 @@
         <section class="coluna-visual">
             <div class="container-visualizacao">
                 <h3>1. Distribuição de Temperatura T(x,y) [3D]</h3>
-                <div id="plot3d"></div>
+                <div id="plot3d" style="height: 350px;"></div>
             </div>
 
             <div class="container-visualizacao">
@@ -43,21 +43,35 @@
                 <button class="btn-aba" id="btn-toggle">▶ Desenvolvimento Algébrico</button>
                 <div id="conteudo-calculo" class="hidden">
                     <div class="math-box">
-                        <strong>Memorial de Cálculo Detalhado</strong><br><br>
-                        <p>Produto densidade/calor específico (\(\rho \cdot c\)) = \(0,594\).</p>
+                        <strong>Memorial de Cálculo Detalhado</strong>
+                        <p>Capacidade térmica volumétrica do alumínio (\(\rho \cdot c\)) = \(0,594\).</p>
+                        
+                        <strong>1. Integral Geral:</strong>
                         \[ Q = 0,594 \iint_D [150e^{-0,1(x^2+y^2)} + 40] \, dA \]
-                        <hr>
-                        <p>Utilizando o Teorema de Fubini para o domínio retangular.</p>
+
+                        <strong>2. Separação por Linearidade:</strong>
+                        \[ Q = 0,594 \left( \iint_D 150e^{-0,1(x^2+y^2)} dA + \iint_D 40 dA \right) \]
+
+                        <strong>3. Resolução do Pico (Fubini):</strong>
+                        \[ Q_{pico} = 89,1 \left( \int_{-5}^{5} e^{-0,1x^2} dx \right) \left( \int_{-4}^{4} e^{-0,1y^2} dy \right) \]
+
+                        <strong>4. Resolução da Base Constante:</strong>
+                        \[ Q_{base} = 0,594 \times (10 \times 8) \times 40 = 1.900,8 \text{ cal} \]
+
+                        <div style="text-align: center; margin-top:15px; padding:10px; background:#e8f4fd; border-radius:8px;">
+                            <strong>Resultado: \( Q_{total} \approx 4.564,48 \text{ cal} \)</strong>
+                        </div>
                     </div>
                 </div>
 
                 <button class="btn-aba" id="btn-analise" style="background-color: #27ae60;">▶ Análise e Interpretação Física</button>
                 <div id="conteudo-analise" class="hidden">
                     <div class="math-box" style="border-left-color: #27ae60;">
-                        <h3>Análise Técnica</h3>
+                        <h3>Interpretação Física</h3>
                         <ul>
                             <li><strong>Material:</strong> Alumínio (\(\rho \cdot c = 0,594\)).</li>
-                            <li><strong>Segurança:</strong> Pico de 190°C (fusão em 660°C).</li>
+                            <li><strong>Segurança:</strong> Pico de 190°C. Como o ponto de fusão é 660°C, a estrutura está segura.</li>
+                            <li><strong>Conclusão:</strong> O cálculo prevê o comportamento térmico para automação industrial.</li>
                         </ul>
                     </div>
                 </div>
