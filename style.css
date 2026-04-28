@@ -2,9 +2,38 @@
 body { font-family: 'Segoe UI', sans-serif; background: var(--fundo); margin: 0; padding: 20px; color: #333; }
 header { text-align: center; background: var(--primaria); color: white; padding: 25px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
 
-main { display: grid; grid-template-columns: 1.5fr 1fr; gap: 25px; max-width: 1200px; margin: auto; }
-.card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; text-align: center; }
+main {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Divide a tela em duas colunas iguais */
+    gap: 30px; /* Cria um espaço de segurança entre os gráficos e o texto */
+    align-items: start;
+    max-width: 1200px;
+    margin: 20px auto;
+}
 
+/* Garante que os containers de gráfico não transbordem */
+.container-visualizacao {
+    width: 100%;
+    min-height: 350px; /* Garante espaço para o Plotly respirar */
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+/* Ajuste do gráfico Plotly para não flutuar sobre o texto */
+#plot3d {
+    width: 100%;
+    height: 300px;
+}
+
+/* Responsividade: Se a tela for pequena (celular), vira uma coluna só */
+@media (max-width: 900px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+}
 #plot3d { height: 350px; width: 100%; }
 canvas { border: 1px solid #ddd; border-radius: 4px; max-width: 100%; }
 
