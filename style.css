@@ -1,18 +1,18 @@
-body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; margin: 0; padding: 20px; }
-header { text-align: center; background: #2c3e50; color: white; padding: 20px; border-radius: 8px; }
-main { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px; }
+:root { --primaria: #2c3e50; --secundaria: #2980b9; --sucesso: #2ecc71; --fundo: #f4f7f6; }
+body { font-family: 'Segoe UI', sans-serif; background: var(--fundo); margin: 0; padding: 20px; color: #333; }
+header { text-align: center; background: var(--primaria); color: white; padding: 25px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
 
-.painel-graficos { flex: 2; display: flex; flex-direction: column; gap: 20px; min-width: 350px; }
-.container-visualizacao { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; }
+main { display: grid; grid-template-columns: 1.5fr 1fr; gap: 25px; max-width: 1200px; margin: auto; }
+.card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; text-align: center; }
 
-#plot3d { width: 100%; height: 350px; }
-.valor-final { font-size: 2.2rem; font-weight: bold; color: #27ae60; }
+#plot3d { height: 350px; width: 100%; }
+canvas { border: 1px solid #ddd; border-radius: 4px; max-width: 100%; }
 
-.botao-aba { width: 100%; padding: 15px; border: none; border-radius: 5px; cursor: pointer; background: #34495e; color: white; font-weight: bold; text-align: left; }
-.btn-azul { background: #2980b9; }
-.escondido { display: none !important; }
+.card-resultado { background: var(--sucesso); color: white; padding: 30px; border-radius: 10px; text-align: center; margin-bottom: 20px; }
+.valor-destaque { font-size: 2.5rem; font-weight: bold; }
 
-.calculo-estilo-caderno { 
-    background: #fdfdfd; padding: 15px; border-left: 5px solid #2980b9; 
-    font-family: 'Courier New', monospace; line-height: 1.8;
-}
+.btn-aba { width: 100%; padding: 15px; background: var(--primaria); color: white; border: none; border-radius: 6px; cursor: pointer; text-align: left; font-size: 1.1rem; }
+.hidden { display: none; }
+.math-box { background: #fff; border-left: 5px solid var(--secundaria); padding: 15px; margin-top: 10px; line-height: 1.6; }
+
+@media (max-width: 900px) { main { grid-template-columns: 1fr; } }
