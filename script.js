@@ -89,5 +89,24 @@ window.onload = function() {
         ctx.fillText('dx', elX + tam/4, elY + tam + 18);
         ctx.fillText('dy', elX + tam + 10, elY + tam/1.5);
         ctx.fillText('dA', elX + 2, elY + tam - 3);
+
+        const cvCorte = document.getElementById('graficoCorte');
+if (cvCorte) {
+    const ctx = cvCorte.getContext('2d');
+    // Desenha a curva 150 * exp(-0.1 * x^2) + 40
+    ctx.beginPath();
+    ctx.strokeStyle = '#e67e22'; // Laranja
+    for(let x = -6; x <= 6; x += 0.1) {
+        let posX = cx + x * escala;
+        let posY = cy - (150 * Math.exp(-0.1 * (x**2)) + 40) * 0.5; // Escala de altura
+        if(x === -6) ctx.moveTo(posX, posY);
+        else ctx.lineTo(posX, posY);
+    }
+    ctx.stroke();
+
+    // Desenha o PILAR lateral (um retângulo de base dx)
+    ctx.fillStyle = 'rgba(231, 76, 60, 0.7)';
+    ctx.fillRect(cx + 2 * escala, cy - (getTempAt(2,0) * 0.5), 15, (getTempAt(2,0) * 0.5));
+}
     }
 };
