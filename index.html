@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Cálculo II - Memorial Interativo</title>
+    <title>Análise Térmica - Cálculo II</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
@@ -40,20 +40,24 @@
             </div>
 
             <div class="aba-calculo">
-                <button id="btn-toggle-calculo" class="botao-aba">▶ Mostrar Passo a Passo</button>
-                
-                <div id="conteudo-calculo" class="escondido">
+                <button id="btn-toggle-explica" class="botao-aba">▶ Explicação dos Passos</button>
+                <div id="conteudo-explica" class="escondido">
                     <div class="passo">
-                        <h4>Passo 1: Definição</h4>
-                        <p>ρ · c = <strong>0,594</strong>.</p>
+                        <h4>Modelagem Física</h4>
+                        <p>O calor total é a integral da temperatura ponderada pela massa específica e calor específico do alumínio.</p>
                     </div>
-                    <div class="passo">
-                        <h4>Passo 2: Função</h4>
-                        <p>T(x,y) = 150e<sup>-0,1(x²+y²)</sup> + 40.</p>
-                    </div>
-                    <div class="passo">
-                        <h4>Passo 3: Integração</h4>
-                        <p>Calculamos o volume sob a curva no domínio dado.</p>
+                </div>
+            </div>
+
+            <div class="aba-calculo" style="margin-top: 10px;">
+                <button id="btn-toggle-corrido" class="botao-aba btn-azul">▶ Desenvolvimento Algébrico</button>
+                <div id="conteudo-corrido" class="escondido">
+                    <div class="calculo-estilo-caderno">
+                        Q = ∬<sub>D</sub> (2,70 · 0,22) · [150e<sup>-0,1(x²+y²)</sup> + 40] dA<br>
+                        Q = 0,594 · ∬<sub>D</sub> [150e<sup>-0,1(x²+y²)</sup> + 40] dx dy<br>
+                        Q = 0,594 · [ ∫∫ 150e<sup>-u</sup> dA + ∫∫ 40 dA ]<br>
+                        Q = 4084,34 + 1900,8<br>
+                        <strong>Q ≈ 4.564,48 cal</strong>
                     </div>
                 </div>
             </div>
