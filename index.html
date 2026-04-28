@@ -63,6 +63,31 @@
                         <div style="text-align: center; margin-top:15px; padding:10px; background:#e8f4fd; border-radius:8px;">
                             <strong>Resultado: \( Q_{total} \approx 4.564,48 \text{ cal} \)</strong>
                         </div>
+                        <button class="btn-aba" id="btn-analise" style="margin-top: 10px; background-color: #27ae60;">
+    ▶ Mostrar Análise e Interpretação Física
+</button>
+
+<div id="conteudo-analise" class="hidden">
+    <div class="math-box" style="border-left: 5px solid #27ae60;">
+        <h3>Análise Técnica e Simulações</h3>
+        
+        <strong>1. Cenários Alternativos:</strong>
+        <ul>
+            <li><strong>Dimensões:</strong> Se aumentarmos a chapa para \(100 \times 100 \text{ cm}\), a integral cobriria uma área maior, capturando mais energia basal e aumentando drasticamente o valor de \(Q\).</li>
+            <li><strong>Material:</strong> Se trocarmos o Alumínio pelo Cobre (\(\rho \cdot c \approx 0,80\)), a mesma temperatura resultaria em mais calor acumulado devido à maior densidade do cobre.</li>
+            <li><strong>Padrão de Aquecimento:</strong> Alterar o expoente da função gaussiana mudaria a concentração do calor. Um expoente maior tornaria o resfriamento nas bordas mais rápido.</li>
+        </ul>
+
+        <hr>
+
+        <strong>2. Interpretação Física:</strong>
+        <p><strong>O que significa \(Q \approx 4.564,48 \text{ cal}\)?</strong> É a quantidade total de energia térmica que a chapa "segura" no momento do pico de aquecimento.</p>
+        
+        <p><strong>Riscos Térmicos:</strong> O ponto de fusão do alumínio é **660°C**. Como nosso pico é de **190°C** (\(150 + 40\)), não há risco de derretimento, mas o gradiente térmico pode causar empenamento por dilatação diferencial.</p>
+        
+        <p><strong>Impacto na Fabricação:</strong> Esse cálculo permite prever o tempo de resfriamento necessário antes que um operador ou robô possa manipular a peça sem causar deformações ou acidentes.</p>
+    </div>
+</div>
                     </div>
                 </div>
         </section>
