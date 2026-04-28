@@ -104,3 +104,18 @@ window.onload = function() {
         ctx.fillText('dx', posX + 2, cy + 15);
     }
 };
+// Lógica da Segunda Aba (Análise Física)
+const btnAnalise = document.getElementById('btn-analise');
+const conteudoAnalise = document.getElementById('conteudo-analise');
+
+if (btnAnalise && conteudoAnalise) {
+    btnAnalise.onclick = function() {
+        const estaEscondido = conteudoAnalise.classList.toggle('hidden');
+        this.innerText = estaEscondido ? "▶ Mostrar Análise e Interpretação Física" : "▼ Esconder Análise e Interpretação Física";
+        
+        // Redesenha as fórmulas caso existam na segunda aba
+        if (!estaEscondido && window.MathJax) {
+            MathJax.typesetPromise([conteudoAnalise]);
+        }
+    };
+}
