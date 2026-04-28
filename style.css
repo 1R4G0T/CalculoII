@@ -97,8 +97,9 @@ canvas {
 #btn-analise:hover { background-color: #2ecc71; transform: translateX(5px); }
 
 /* Boxes de Conteúdo Matemático */
-.hidden { display: none; }
-
+.hidden {
+    display: none !important;
+}
 .math-box { 
     background: #fff; 
     border-left: 5px solid var(--secundaria); 
