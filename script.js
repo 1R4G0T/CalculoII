@@ -1,5 +1,5 @@
 window.onload = function() {
-    // === 1. Lógica do Botão ===
+    // 1. Lógica do Botão (Unificada e Corrigida)
     const btn = document.getElementById('btn-toggle');
     const conteudo = document.getElementById('conteudo-calculo');
 
@@ -16,7 +16,7 @@ window.onload = function() {
         };
     }
 
-    // === 2. Gráfico 3D (Distribuição de Calor) ===
+    // 2. Gráfico 3D (Distribuição de Calor)
     const x = [], y = [], z = [];
     for(let i=-6; i<=6; i+=0.4) x.push(i);
     for(let j=-5; j<=5; j+=0.4) y.push(j);
@@ -30,21 +30,18 @@ window.onload = function() {
         z.push(row);
     }
 
-    const plotElement = document.getElementById('plot3d');
-    if (plotElement) {
-        Plotly.newPlot('plot3d', [{
-            z: z, x: x, y: y, type: 'surface', colorscale: 'Hot'
-        }], {
-            margin: {l:0, r:0, b:0, t:0},
-            scene: { 
-                xaxis: {title: 'X (cm)'}, 
-                yaxis: {title: 'Y (cm)'}, 
-                zaxis: {title: 'T (°C)'} 
-            }
-        });
-    }
+    Plotly.newPlot('plot3d', [{
+        z: z, x: x, y: y, type: 'surface', colorscale: 'Hot'
+    }], {
+        margin: {l:0, r:0, b:0, t:0},
+        scene: { 
+            xaxis: {title: 'X (cm)'}, 
+            yaxis: {title: 'Y (cm)'}, 
+            zaxis: {title: 'T (°C)'} 
+        }
+    });
 
-    // === 3. Gráfico 2D (Corrigido: era aqui o erro 'onst') ===
+    // 3. Gráfico 2D (Corrigido: era aqui o erro 'onst')
     const cv = document.getElementById('meuGrafico2d');
     if (cv) {
         const ctx = cv.getContext('2d');
@@ -54,31 +51,31 @@ window.onload = function() {
 
         ctx.clearRect(0, 0, cv.width, cv.height);
 
-        // Chapa D
-        ctx.fillStyle = 'rgba(52, 152, 219, 0.15)';
-        ctx.strokeStyle = '#2980b9';
+        // a. Desenha o Domínio Retangular (Chapa D)
+        ctx.fillStyle = 'rgba(52, 152, 219, 0.15)'; 
+        ctx.strokeStyle = '#2980b9'; 
         ctx.lineWidth = 2;
         ctx.fillRect(cx - 5 * escala, cy - 4 * escala, 10 * escala, 8 * escala);
         ctx.strokeRect(cx - 5 * escala, cy - 4 * escala, 10 * escala, 8 * escala);
 
-        // Eixos
-        ctx.strokeStyle = '#ccc';
+        // b. Eixos Cartesianos
+        ctx.strokeStyle = '#ccc'; 
         ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.moveTo(0, cy); ctx.lineTo(cv.width, cy);
-        ctx.moveTo(cx, 0); ctx.lineTo(cx, cv.height);
+        ctx.moveTo(0, cy); ctx.lineTo(cv.width, cy); 
+        ctx.moveTo(cx, 0); ctx.lineTo(cx, cv.height); 
         ctx.stroke();
 
-        // Pilar Diferencial (dA)
+        // c. O PILAR DIFERENCIAL (dA = dx * dy)
         const elX = cx + 2 * escala; 
         const elY = cy - 2 * escala;
-        const tam = 15;
+        const tam = 15; 
 
         ctx.fillStyle = '#e74c3c';
         ctx.fillRect(elX, elY, tam, tam);
 
-        // Legendas
-        ctx.strokeStyle = '#c0392b';
+        // d. Legendas e Linhas de Indicação
+        ctx.strokeStyle = '#c0392b'; 
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(elX, elY + tam + 5); 
