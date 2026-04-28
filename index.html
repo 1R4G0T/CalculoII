@@ -2,54 +2,65 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Cálculo II - Memorial Interativo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio Térmico - Análise de Chapa</title>
+    <title>Memorial de Cálculo - Integral Dupla</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es6/core.js"></script>
 </head>
 <body>
     <header>
-        <h1>Análise Térmica Industrial</h1>
-        <p>Estudo de Integral Dupla sobre Chapas de Alumínio</p>
+        <h1>Análise de Energia Térmica</h1>
+        <p>Estudo de caso: Indústria Metalúrgica de Alumínio</p>
+        <h1>Análise de Calor: Integral Dupla</h1>
+        <p>Estudo do elemento infinitesimal dA = dx · dy</p>
     </header>
 
     <main>
-        <section class="painel-graficos">
-            <div class="container-visualizacao">
-                <h3>1. Distribuição de Temperatura T(x,y) [3D]</h3>
-                <div id="plot3d"></div>
-                <p class="legenda">O "sino de calor" sobre a chapa.</p>
-            </div>
-
-            <div class="container-visualizacao">
-                <h3>2. Domínio da Chapa D [2D]</h3>
-                <canvas id="meuGrafico2d" width="400" height="300"></canvas>
-                <p class="legenda">Região D: x ∈ [-5, 5] e y ∈ [-4, 4]</p>
-            </div>
+        <section id="grafico-container">
+            <h2>Distribuição de Temperatura $T(x,y)$</h2>
+            <div id="plot3d"></div>
+        <section id="canvas-container">
+            <h2>Representação da Região D</h2>
+            <canvas id="meuGrafico2d" width="500" height="400"></canvas>
+            <p class="legenda">O retângulo vermelho representa o elemento infinitesimal de área.</p>
         </section>
 
-        <section class="painel-info">
-            <div class="card-resultado">
-                <h3>Resultado Final</h3>
-                <div class="valor-final">Q ≈ 4.564,48 cal</div>
-            </div>
-
-            <div class="aba-calculo">
-                <button id="btn-toggle-explica" class="botao-aba">▶ Explicação dos Passos</button>
-                <div id="conteudo-explica" class="escondido">
-                    <p>Aqui você explica a teoria por trás de cada etapa.</p>
+        <section id="calculo-container">
+            <h2>Memorial de Cálculo</h2>
+            
+            <div class="card">
+                <h3>1. Modelagem</h3>
+                <p>A quantidade total de calor $Q$ é calculada pela integral dupla:</p>
+               <p class="formula">Q = Integral Dupla de (densidade * calor específico * Temperatura) dA</p>
+                <h3>A Integral de Calor</h3>
+                <p>Para calcular o calor total, somamos as contribuições de cada elemento infinitesimal:</p>
+                
+                <div class="formula-quadro">
+                    <span class="sig-integral">∬</span> 
+                    <span class="limite-d">D</span>
+                    <span class="expressao">ρ · c · T(x, y) <strong>dx dy</strong></span>
                 </div>
             </div>
 
-            <div class="aba-calculo" style="margin-top: 10px;">
-                <button id="btn-toggle-corrido" class="botao-aba btn-azul">▶ Desenvolvimento Algébrico</button>
-                <div id="conteudo-corrido" class="escondido">
-                    <div class="calculo-estilo-caderno">
-                        Q = ∬<sub>D</sub> (2,70 · 0,22) · [150e<sup>-0,1(x²+y²)</sup> + 40] dA<br>
-                        Q = 0,594 · ∬<sub>D</sub> [150e<sup>-0,1(x²+y²)</sup> + 40] dx dy<br>
-                        <strong>...</strong><br>
-                        <strong>Q ≈ 4.564,48 cal</strong>
-                    </div>
-                </div>
+            <div class="card">
+                <h3>2. Parâmetros e Resultados</h3>
+               <ul>
+                <h3>Dados do Problema</h3>
+                <ul>
+                    <li><strong>Densidade (ρ):</strong> 2,70 g/cm³</li>
+                    <li><strong>Calor Específico (c):</strong> 0,22 cal/g °C</li>
+                    <li><strong>Área:</strong> 80 cm² (x entre -5 e 5, y entre -4 e 4)</li>
+            </ul>
+                    <li><strong>Domínio D:</strong> x ∈ [-5, 5], y ∈ [-4, 4]</li>
+                </ul>
+                <hr>
+                <p><strong>Resultado Aproximado:</strong></p>
+                <h2 style="color: #e74c3c;">Q ≈ 4.564,48 calorias</h2>
+                <p><strong>Resultado Final:</strong></p>
+                <h1 class="resultado">Q ≈ 4.564,48 cal</h1>
             </div>
         </section>
     </main>
