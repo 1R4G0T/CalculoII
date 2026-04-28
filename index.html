@@ -44,15 +44,27 @@
             </button>
             
             <div id="conteudo-calculo" class="hidden aba-conteudo">
-                <div class="math-box">
-                    <strong>Memorial de Cálculo Detalhado</strong><br><br>
-                    <p>Para calcular a energia térmica total (\(Q\)), utilizamos as propriedades do alumínio (\(\rho \cdot c = 0,594\)).</p>
-                    \[ Q = 0,594 \iint_D [150e^{-0,1(x^2+y^2)} + 40] \, dA \]
-                    <div class="resultado-inline">
-                        <strong>\( Q \approx 4.564,48 \text{ cal} \)</strong>
+                    <div class="math-box">
+                        <strong>Memorial de Cálculo Detalhado</strong>
+                        <p>Capacidade térmica volumétrica do alumínio (\(\rho \cdot c\)) = \(0,594\).</p>
+                        
+                        <strong>1. Integral Geral:</strong>
+                        \[ Q = 0,594 \iint_D [150e^{-0,1(x^2+y^2)} + 40] \, dA \]
+
+                        <strong>2. Separação por Linearidade:</strong>
+                        \[ Q = 0,594 \left( \iint_D 150e^{-0,1(x^2+y^2)} dA + \iint_D 40 dA \right) \]
+
+                        <strong>3. Resolução do Pico (Fubini):</strong>
+                        \[ Q_{pico} = 89,1 \left( \int_{-5}^{5} e^{-0,1x^2} dx \right) \left( \int_{-4}^{4} e^{-0,1y^2} dy \right) \]
+
+                        <strong>4. Resolução da Base Constante:</strong>
+                        \[ Q_{base} = 0,594 \times (10 \times 8) \times 40 = 1.900,8 \text{ cal} \]
+
+                        <div style="text-align: center; margin-top:15px; padding:10px; background:#e8f4fd; border-radius:8px;">
+                            <strong>Resultado: \( Q_{total} \approx 4.564,48 \text{ cal} \)</strong>
+                        </div>
                     </div>
                 </div>
-            </div>
         </section>
     </main>
 
