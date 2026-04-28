@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Análise Térmica - Cálculo II</title>
+    <title>Análise Térmica - Desafio Profissional</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
@@ -15,21 +15,16 @@
     <main>
         <section class="painel-graficos">
             <div class="container-visualizacao">
-                <h3>1. Distribuição T(x,y) [3D]</h3>
+                <h3>1. Distribuição de Temperatura T(x,y) [3D]</h3>
                 <div id="plot3d"></div>
             </div>
 
             <div class="container-visualizacao">
-                <h3>2. Domínio D e Elemento dA [2D]</h3>
+                <h3>2. Domínio da Chapa D [2D]</h3>
                 <canvas id="meuGrafico2d" width="400" height="300"></canvas>
                 <div class="formula-principal">
                     ∬<sub>D</sub> ρ · c · T(x, y) <span class="dxdy">dx dy</span>
                 </div>
-            </div>
-
-             <div class="container-visualizacao">
-                <h3>3. Conceito: dA em Volume</h3>
-                <div id="diagrama-da-3d"></div>
             </div>
         </section>
 
@@ -40,12 +35,9 @@
             </div>
 
             <div class="aba-calculo">
-                <button id="btn-toggle-explica" class="botao-aba">▶ Explicação dos Passos</button>
+                <button id="btn-toggle-explica" class="botao-aba">▶ Explicação Teórica</button>
                 <div id="conteudo-explica" class="escondido">
-                    <div class="passo">
-                        <h4>Modelagem Física</h4>
-                        <p>O calor total é a integral da temperatura ponderada pela massa específica e calor específico do alumínio.</p>
-                    </div>
+                    <p>O calor total acumulado é calculado integrando a temperatura ponto a ponto sobre a área da chapa, multiplicada pelas propriedades térmicas do alumínio.</p>
                 </div>
             </div>
 
@@ -53,17 +45,17 @@
                 <button id="btn-toggle-corrido" class="botao-aba btn-azul">▶ Desenvolvimento Algébrico</button>
                 <div id="conteudo-corrido" class="escondido">
                     <div class="calculo-estilo-caderno">
-                        Q = ∬<sub>D</sub> (2,70 · 0,22) · [150e<sup>-0,1(x²+y²)</sup> + 40] dA<br>
-                        Q = 0,594 · ∬<sub>D</sub> [150e<sup>-0,1(x²+y²)</sup> + 40] dx dy<br>
-                        Q = 0,594 · [ ∫∫ 150e<sup>-u</sup> dA + ∫∫ 40 dA ]<br>
-                        Q = 4084,34 + 1900,8<br>
+                        Q = ∬<sub>D</sub> ρ · c · T(x, y) dA <br>
+                        Q = ∬<sub>D</sub> (2,70) · (0,22) · [150e<sup>-0,1(x²+y²)</sup> + 40] dx dy <br>
+                        Q = 0,594 · ∬<sub>D</sub> [150e<sup>-0,1(x²+y²)</sup> + 40] dx dy <br>
+                        Q = 89,1 · ∬<sub>D</sub> e<sup>-0,1(x²+y²)</sup> dA + 0,594 · (40 · 80) <br>
+                        Q = 89,1 · (45,84) + 1900,8 <br>
                         <strong>Q ≈ 4.564,48 cal</strong>
                     </div>
                 </div>
             </div>
         </section>
     </main>
-
     <script src="script.js"></script>
 </body>
 </html>
