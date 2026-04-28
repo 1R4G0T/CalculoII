@@ -1,22 +1,104 @@
-/* ... manter o anterior e adicionar ... */
-
-.btn-azul { background: #2980b9 !important; }
-.btn-azul:hover { background: #2471a3 !important; }
-
-.calculo-estilo-caderno {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 5px;
-    border-left: 4px solid #2980b9;
-    text-align: left;
-    font-family: 'Courier New', Courier, monospace; /* Fonte estilo máquina de escrever/código */
-    line-height: 1.8;
-    font-size: 0.95rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1a1a1a;
+    color: #f4f4f4;
+    background-color: #ffffff;
     color: #2c3e50;
-    overflow-x: auto;
+    margin: 0;
+    padding: 20px;
 }
 
-.calculo-estilo-caderno code {
-    display: block;
-    white-space: pre-wrap;
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    border-bottom: 2px solid #2c3e50;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+}
+
+h1 { color: #3498db; }
+
+main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    gap: 40px;
+}
+
+#grafico-container {
+    flex: 1;
+    min-width: 400px;
+    background: #2c3e50;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+#canvas-container {
+    background: #fcfcfc;
+    border: 2px solid #2c3e50;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+}
+
+#calculo-container {
+    flex: 1;
+    min-width: 300px;
+canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+#plot3d {
+    width: 100%;
+    height: 500px;
+.legenda {
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+#calculo-container {
+    max-width: 500px;
+}
+
+.card {
+    background: #333;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-left: 5px solid #3498db;
+    border-radius: 4px;
+    background: #f9f9f9;
+    padding: 25px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border-left: 6px solid #2c3e50;
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.05);
+}
+
+.formula {
+    background: #222;
+    padding: 10px;
+/* Estética de Quadro para a Fórmula */
+.formula-quadro {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.8rem;
+    text-align: center;
+    font-size: 1.2rem;
+    border: 2px solid #2c3e50;
+    padding: 25px;
+    background: #fff;
+    margin: 20px 0;
+    position: relative;
+}
+
+li { margin-bottom: 10px; }
+.sig-integral { font-size: 3.5rem; vertical-align: middle; }
+.limite-d { font-size: 1.2rem; margin-left: -20px; vertical-align: sub; }
+.expressao { margin-left: 15px; letter-spacing: 1px; }
+
+.resultado {
+    color: #e74c3c;
+    font-size: 2.5rem;
+    text-align: center;
+    margin-top: 10px;
 }
