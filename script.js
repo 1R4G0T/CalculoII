@@ -46,26 +46,61 @@ window.onload = function() {
     });
 
     // 3. Gráfico 2D (Conceito de dA = dx * dy)
-    const cv = document.getElementById('meuGrafico2d');
+onst cv = document.getElementById('meuGrafico2d');
     if (cv) {
         const ctx = cv.getContext('2d');
-        const escala = 25; 
-        const cx = cv.width/2; 
-        const cy = cv.height/2;
+        const escala = 25; // Ajuste de zoom (pixels por cm)
+        const cx = cv.width / 2; // Centro X do canvas
+        const cy = cv.height / 2; // Centro Y do canvas
 
-        ctx.fillStyle = 'rgba(52, 152, 219, 0.2)';
-        ctx.fillRect(cx - 5*escala, cy - 4*escala, 10*escala, 8*escala);
-        
-        ctx.strokeStyle = '#ccc';
+        // Limpar canvas antes de desenhar
+        ctx.clearRect(0, 0, cv.width, cv.height);
+
+        // a. Desenha o Domínio Retangular (Chapa D)
+        // Chapa vai de x[-5, 5] e y[-4, 4]
+        ctx.fillStyle = 'rgba(52, 152, 219, 0.15)'; // Azul claro transparente
+        ctx.strokeStyle = '#2980b9'; // Borda azul escura
+        ctx.lineWidth = 2;
+        ctx.fillRect(cx - 5 * escala, cy - 4 * escala, 10 * escala, 8 * escala);
+        ctx.strokeRect(cx - 5 * escala, cy - 4 * escala, 10 * escala, 8 * escala);
+
+        // b. Eixos Cartesianos
+        ctx.strokeStyle = '#ccc'; // Cinza claro
+        ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.moveTo(0, cy); ctx.lineTo(cv.width, cy);
-        ctx.moveTo(cx, 0); ctx.lineTo(cx, cv.height);
+        ctx.moveTo(0, cy); ctx.lineTo(cv.width, cy); // Eixo X
+        ctx.moveTo(cx, 0); ctx.lineTo(cx, cv.height); // Eixo Y
         ctx.stroke();
 
-        // Elemento diferencial dA (igual ao slide da aula)
+        // c. O PILAR DIFERENCIAL (dA = dx * dy) - IGUAL AO SLIDE
+        // Escolhemos uma posição arbitrária na chapa para ilustrar: (x=2, y=2)
+        const elX = cx + 2 * escala; 
+        const elY = cy - 2 * escala;
+        const tam = 15; // Tamanho do quadradinho dx por dy (em pixels)
+
+        // Quadradinho vermelho destacado (o "pilar")
         ctx.fillStyle = '#e74c3c';
-        ctx.fillRect(cx + 2*escala, cy - 2*escala, 15, 15);
+        ctx.fillRect(elX, elY, tam, tam);
+
+        // d. Legendas e Linhas de Indicação
+        ctx.strokeStyle = '#c0392b'; // Vermelho escuro
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        
+        // Linha de indicação dx (abaixo do quadradinho)
+        ctx.moveTo(elX, elY + tam + 5); 
+        ctx.lineTo(elX + tam, elY + tam + 5);
+        
+        // Linha de indicação dy (à direita do quadradinho)
+        ctx.moveTo(elX + tam + 5, elY); 
+        ctx.lineTo(elX + tam + 5, elY + tam);
+        ctx.stroke();
+
+        // Textos dx, dy e dA
         ctx.fillStyle = '#333';
-        ctx.fillText('dA', cx + 2*escala + 2, cy - 2*escala + 12);
+        ctx.font = '12px Arial';
+        ctx.fillText('dx', elX + tam/4, elY + tam + 18); // Texto dx centralizado abaixo
+        ctx.fillText('dy', elX + tam + 10, elY + tam/1.5); // Texto dy centralizado à direita
+        ctx.fillText('dA', elX + 2, elY + tam - 3); // Texto dA dentro do quadradinho
     }
 };
