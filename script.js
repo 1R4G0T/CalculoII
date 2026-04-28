@@ -1,58 +1,29 @@
 window.onload = function() {
-    // === 1. Função Matemática Base ===
+    // 1. Lógica do Botão
+    const btn = document.getElementById('btn-toggle');
+    const conteudo = document.getElementById('conteudo-calculo');
+
+    if (btn && conteudo) {
+        btn.onclick = function() {
+            const estaEscondido = conteudo.classList.toggle('hidden');
+            this.innerText = estaEscondido ? "▶ Mostrar Desenvolvimento Algébrico" : "▼ Esconder Desenvolvimento Algébrico";
+            
+            if (!estaEscondido && window.MathJax) {
+                MathJax.typesetPromise([conteudo]);
+            }
+        };
+    }
+
+    // Função auxiliar para calcular a temperatura em qualquer ponto
     function getTempAt(x, y) {
-        // Função gaussiana com patamar basal
         return 150 * Math.exp(-0.1 * (x**2 + y**2)) + 40;
     }
 
-    const escala2d = 25; // Escala para os canvas 2D
-
-    // === 2. Lógica das Abas (Blindada com CSS Class Toggle) ===
-    
-    // Função genérica para configurar abas
-    const configurarAba = (idBtn, idConteudo, texto) => {
-        const btn = document.getElementById(idBtn);
-        const conteudo = document.getElementById(idConteudo);
-        const icone = btn.querySelector('.icone');
-
-        if (btn && conteudo) {
-            btn.onclick = function() {
-                // Alterna entre a classe 'hidden' e 'visible' do CSS
-                const estaVisivel = conteudo.classList.toggle('visible');
-                conteudo.classList.toggle('hidden', !estaVisivel);
-                
-                // Atualiza o texto e a rotação do ícone
-                this.childNodes[1].nodeValue = estaVisivel ? " Esconder " + texto : " " + texto;
-                icone.style.transform = estaVisivel ? 'rotate(90deg)' : 'rotate(0deg)';
-                
-                // Força o MathJax a re-processar as fórmulas ao abrir a aba
-                if (estaVisivel && window.MathJax) {
-                    MathJax.typesetPromise();
-                }
-                
-                // CRUCIAL: Força o Plotly a redimensionar quando a aba abre, 
-                // resolvendo o bug do gráfico esmagado
-                if (estaVisivel) {
-                    Plotly.Plots.resize('plot3d');
-                }
-            };
-        }
-    };
-
-    // Ativando as duas abas
-    configurarAba('btn-toggle', 'conteudo-calculo', 'Desenvolvimento Algébrico');
-    configurarAba('btn-analise', 'conteudo-analise', 'Análise e Interpretação Física');
-
-
-    // === 3. Renderização dos Gráficos ===
-
-    // --- GRÁFICO 3D (Plotly) ---
+    // 2. Gráfico 3D (Plotly)
     const xValues = [], yValues = [], zValues = [];
-    // Gerando malha de pontos
-    for(let i=-6; i<=6; i+=0.3) xValues.push(i);
-    for(let j=-5; j<=5; j+=0.3) yValues.push(j);
+    for(let i=-6; i<=6; i+=0.4) xValues.push(i);
+    for(let j=-5; j<=5; j+=0.4) yValues.push(j);
 
-    // Calculando a matriz Z
     for(let j=0; j<yValues.length; j++) {
         let row = [];
         for(let i=0; i<xValues.length; i++) {
@@ -61,20 +32,14 @@ window.onload = function() {
         zValues.push(row);
     }
 
-    const plot3dDiv = document.getElementById('plot3d');
-    if (plot3dDiv) {
-        Plotly.newPlot('plot3d',, {
-            margin: {l:0, r:0, b:0, t:0},
-            scene: {
-                xaxis: {title: 'X (cm)'},
-                yaxis: {title: 'Y (cm)'},
-                zaxis: {title: 'T (°C)'}
-            },
-            autosize: true
-        });
-    }
+    Plotly.newPlot('plot3d', [{
+        z: zValues, x: xValues, y: yValues, type: 'surface', colorscale: 'Hot'
+    }], { margin: {l:0, r:0, b:0, t:0} });
 
-    // --- GRÁFICO 2D (Domínio da Chapa) ---
+    // 3. Configurações Comuns para os Canvas
+    const escala = 25; 
+
+    // --- GRÁFICO 2D (Domínio D) ---
     const cv2d = document.getElementById('meuGrafico2d');
     if (cv2d) {
         const ctx = cv2d.getContext('2d');
@@ -83,28 +48,21 @@ window.onload = function() {
 
         ctx.clearRect(0, 0, cv2d.width, cv2d.height);
         
-        // Desenho da Chapa D (Retângulo azul claro)
+        // Desenho da Chapa D
         ctx.fillStyle = 'rgba(52, 152, 219, 0.15)';
-        ctx.fillRect(cx - 5 * escala2d, cy - 4 * escala2d, 10 * escala2d, 8 * escala2d);
+        ctx.fillRect(cx - 5 * escala, cy - 4 * escala, 10 * escala, 8 * escala);
         
-        // Borda da chapa
-        ctx.strokeStyle = '#2980b9';
-        ctx.lineWidth = 2;
-        ctx.strokeRect(cx - 5 * escala2d, cy - 4 * escala2d, 10 * escala2d, 8 * escala2d);
-
-        // Eixos Cartesianos
+        // Eixos
         ctx.strokeStyle = '#ccc';
-        ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.moveTo(0, cy); ctx.lineTo(cv2d.width, cy); // Eixo X
-        ctx.moveTo(cx, 0); ctx.lineTo(cx, cv2d.height); // Eixo Y
+        ctx.moveTo(0, cy); ctx.lineTo(cv2d.width, cy);
+        ctx.moveTo(cx, 0); ctx.lineTo(cx, cv2d.height);
         ctx.stroke();
 
-        // Pilar dA (Elemento diferencial em vermelho)
+        // Pilar dA
         ctx.fillStyle = '#e74c3c';
-        ctx.fillRect(cx + 2 * escala2d, cy - 2 * escala2d, 15, 15);
-        ctx.fillStyle = '#333';
-        ctx.fillText('dA', cx + 2 * escala2d + 2, cy - 2 * escala2d + 12);
+        ctx.fillRect(cx + 2 * escala, cy - 2 * escala, 15, 15);
+        ctx.fillText('dA', cx + 2 * escala + 2, cy - 2 * escala + 12);
     }
 
     // --- GRÁFICO DE CORTE (Perfil Lateral em y=0) ---
@@ -112,7 +70,7 @@ window.onload = function() {
     if (cvCorte) {
         const ctx = cvCorte.getContext('2d');
         const cx = cvCorte.width / 2;
-        const cy = cvCorte.height - 50; // Chão do gráfico
+        const cy = cvCorte.height - 50; // Chão do gráfico mais para baixo
 
         ctx.clearRect(0, 0, cvCorte.width, cvCorte.height);
 
@@ -122,21 +80,27 @@ window.onload = function() {
         ctx.moveTo(20, cy); ctx.lineTo(cvCorte.width - 20, cy);
         ctx.stroke();
 
-        // Desenha a Curva de Temperatura (Perfil Gaussiano)
+        // Desenha a Curva de Temperatura (Perfil)
         ctx.beginPath();
-        ctx.strokeStyle = '#e67e22'; // Laranja
+        ctx.strokeStyle = '#e67e22';
         ctx.lineWidth = 2;
         for(let x = -6; x <= 6; x += 0.1) {
-            let posX = cx + x * escala2d;
-            // Temperatura em y=0. 0.8 é escala visual de altura.
-            let posY = cy - (getTempAt(x, 0) * 0.8); 
+            let posX = cx + x * escala;
+            let posY = cy - (getTempAt(x, 0) * 0.8); // 0.8 é escala visual de altura
             if(x === -6) ctx.moveTo(posX, posY);
             else ctx.lineTo(posX, posY);
         }
         ctx.stroke();
 
-        // Legendas básicas
+        // O PILAR DIFERENCIAL (Representando a fatia dx)
+        const posX = cx + 2 * escala;
+        const alturaPilar = getTempAt(2, 0) * 0.8;
+        
+        ctx.fillStyle = 'rgba(231, 76, 60, 0.7)';
+        ctx.fillRect(posX, cy - alturaPilar, 15, alturaPilar);
+        
         ctx.fillStyle = '#333';
-        ctx.fillText('x = 2cm', cx + 2 * escala2d - 15, cy + 15);
+        ctx.fillText('T(x,0)', posX - 10, cy - alturaPilar - 10);
+        ctx.fillText('dx', posX + 2, cy + 15);
     }
 };
