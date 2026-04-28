@@ -20,47 +20,18 @@
                 <div id="plot3d"></div>
             </div>
 
-        <div class="container-visualizacao">
-            <h3>2. Domínio da Chapa D [2D]</h3>
-            <canvas id="meuGrafico2d" width="400" height="300"></canvas>
-            <p style="font-size: 0.8rem; text-align: center; color: #666;">
-                Representação do elemento de área \( dA = dx \cdot dy \) no domínio retangular.
-            </p>
-        </div>
+            <div class="container-visualizacao">
+                <h3>2. Domínio da Chapa D [2D]</h3>
+                <canvas id="meuGrafico2d" width="400" height="300"></canvas>
+                <p class="legenda">Representação do elemento de área \( dA = dx \cdot dy \).</p>
+            </div>
+
+            <div class="container-visualizacao">
+                <h3>3. Corte Transversal (Perfil em y=0)</h3>
+                <canvas id="graficoCorte" width="400" height="300"></canvas>
+                <p class="legenda">Fatia diferencial onde o volume vira área.</p>
+            </div>
         </section>
-
-    <button class="btn-aba" id="btn-analise" style="margin-top: 10px; background-color: #27ae60;">
-    ▶ Mostrar Análise e Interpretação Física
-</button>
-
-<div id="conteudo-analise" class="hidden">
-    <div class="math-box" style="border-left: 5px solid #27ae60;">
-        <h3>Análise Técnica e Simulações</h3>
-        
-        <strong>1. Cenários Alternativos:</strong>
-        <ul>
-            <li><strong>Dimensões:</strong> Se aumentarmos a chapa para \(100 \times 100 \text{ cm}\), a integral cobriria uma área maior, capturando mais energia basal e aumentando drasticamente o valor de \(Q\).</li>
-            <li><strong>Material:</strong> Se trocarmos o Alumínio pelo Cobre (\(\rho \cdot c \approx 0,80\)), a mesma temperatura resultaria em mais calor acumulado devido à maior densidade do cobre.</li>
-            <li><strong>Padrão de Aquecimento:</strong> Alterar o expoente da função gaussiana mudaria a concentração do calor. Um expoente maior tornaria o resfriamento nas bordas mais rápido.</li>
-        </ul>
-
-        <hr>
-
-        <strong>2. Interpretação Física:</strong>
-        <p><strong>O que significa \(Q \approx 4.564,48 \text{ cal}\)?</strong> É a quantidade total de energia térmica que a chapa "segura" no momento do pico de aquecimento.</p>
-        
-        <p><strong>Riscos Térmicos:</strong> O ponto de fusão do alumínio é **660°C**. Como nosso pico é de **190°C** (\(150 + 40\)), não há risco de derretimento, mas o gradiente térmico pode causar empenamento por dilatação diferencial.</p>
-        
-        <p><strong>Impacto na Fabricação:</strong> Esse cálculo permite prever o tempo de resfriamento necessário antes que um operador ou robô possa manipular a peça sem causar deformações ou acidentes.</p>
-    </div>
-</div>
-        <div class="container-visualizacao">
-    <h3>3. Corte Transversal (Perfil em y=0)</h3>
-    <canvas id="graficoCorte" width="400" height="300"></canvas>
-    <p style="font-size: 0.8rem; text-align: center; color: #666;">
-        Visualização da fatia diferencial onde o volume vira área.
-    </p>
-</div>
 
         <section class="coluna-memorial">
             <div class="card-resultado">
@@ -68,36 +39,32 @@
                 <div class="valor-destaque">Q ≈ 4.564,48 cal</div>
             </div>
 
-            <button class="btn-aba" id="btn-toggle">▶ Mostrar Desenvolvimento Algébrico</button>
-            <div id="conteudo-calculo" class="hidden">
+            <div class="abas-container">
+                <button class="btn-aba" id="btn-toggle">▶ Desenvolvimento Algébrico</button>
+                <div id="conteudo-calculo" class="hidden">
+                    <div class="math-box">
+                        <strong>Memorial de Cálculo Detalhado</strong><br><br>
+                        <p>Produto densidade/calor específico (\(\rho \cdot c\)) = \(0,594\).</p>
+                        \[ Q = 0,594 \iint_D [150e^{-0,1(x^2+y^2)} + 40] \, dA \]
+                        <hr>
+                        <p>Utilizando o Teorema de Fubini para o domínio retangular.</p>
+                    </div>
+                </div>
 
-<div class="math-box">
-    <strong>Memorial de Cálculo Detalhado</strong><br><br>
-    
-    <p>Para calcular a energia térmica total \((Q\)), utilizamos as propriedades do alumínio onde o produto da densidade pelo calor específico (\(\rho \cdot c\)) resulta em \(0,594\).</p>
-
-    <strong>1. Montagem da Integral Dupla:</strong><br>
-    <p>Esta integral representa a soma de toda a energia térmica sobre a superfície da chapa D.</p>
-    \[ Q = 0,594 \iint_D [150e^{-0,1(x^2+y^2)} + 40] \, dA \]<br><br>
-
-    <strong>2. Divisão por Linearidade:</strong><br>
-    <p>Separamos o cálculo em duas partes: a energia do pico central (gaussiana) e a energia basal constante.</p>
-    \[ Q = 0,594 \left( \iint_D 150e^{-0,1(x^2+y^2)} dA + \iint_D 40 dA \right) \]<br><br>
-
-    <strong>3. Aplicação do Teorema de Fubini:</strong><br>
-    <p>Como o domínio \(D\) é retangular, separamos as variáveis \(x\) e \(y\) para resolver como integrais simples. O diferencial de área torna-se \(dA = dx \cdot dy\).</p>
-    \[ Q_{pico} = 89,1 \left( \int_{-5}^{5} e^{-0,1x^2} dx \right) \left( \int_{-4}^{4} e^{-0,1y^2} dy \right) \]<br><br>
-
-<strong>4. Resultado Final:</strong>
-<p>Utilizando a constante de capacidade térmica volumétrica do alumínio \( (\rho \cdot c = 0,594) \), convertemos o volume matemático em energia térmica real:</p>
-<div style="text-align: center; font-size: 1.2rem; background: #e8f4fd; padding: 15px; border-radius: 8px; border: 1px solid #b3d7ff;">
-    <strong>\( Q_{total} \approx 4.564,48 \text{ cal} \)</strong>
-</div>
-</div>
-</div>
+                <button class="btn-aba" id="btn-analise" style="background-color: #27ae60;">▶ Análise e Interpretação Física</button>
+                <div id="conteudo-analise" class="hidden">
+                    <div class="math-box" style="border-left-color: #27ae60;">
+                        <h3>Análise Técnica</h3>
+                        <ul>
+                            <li><strong>Material:</strong> Alumínio (\(\rho \cdot c = 0,594\)).</li>
+                            <li><strong>Segurança:</strong> Pico de 190°C (fusão em 660°C).</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
+
     <script src="script.js"></script>
 </body>
 </html>
