@@ -1,23 +1,33 @@
 window.onload = function() {
-    // 1. Lógica do Botão e Abas
-    const btn = document.getElementById('btn-toggle');
-    const conteudo = document.getElementById('conteudo-calculo');
+    // 1. Função Genérica para Controle de Abas
+    function configurarBotao(idBotao, idConteudo) {
+        const btn = document.getElementById(idBotao);
+        const conteudo = document.getElementById(idConteudo);
 
-    if (btn && conteudo) {
-        btn.onclick = function() {
-            const estaVisivel = conteudo.classList.toggle('visible');
-            conteudo.classList.toggle('hidden', !estaVisivel);
-            
-            this.innerHTML = estaVisivel ? "▼ Esconder Desenvolvimento Algébrico" : "▶ Mostrar Desenvolvimento Algébrico";
-            
-            if (estaVisivel) {
-                // Força o gráfico 3D a ocupar o espaço novo
-                Plotly.Plots.resize('plot3d');
-                // Renderiza as fórmulas matemáticas
-                if (window.MathJax) MathJax.typesetPromise([conteudo]);
-            }
-        };
+        if (btn && conteudo) {
+            btn.onclick = function() {
+                const estaVisivel = conteudo.classList.toggle('visible');
+                conteudo.classList.toggle('hidden', !estaVisivel);
+                
+                // Altera o ícone/texto do botão
+                const textoBase = this.innerText.replace(/[▶▼]\s*/, "");
+                this.innerHTML = estaVisivel ? `▼ Esconder ${textoBase}` : `▶ Mostrar ${textoBase}`;
+                
+                if (estaVisivel) {
+                    // Ajustes de renderização necessários ao abrir
+                    Plotly.Plots.resize('plot3d');
+                    if (window.MathJax) MathJax.typesetPromise([conteudo]);
+                }
+            };
+        }
     }
+
+    // Ativa as duas abas
+    configurarBotao('btn-toggle', 'conteudo-calculo');
+    configurarBotao('btn-analise', 'conteudo-analise');
+
+    // ... restante das funções getTempAt e Gráficos ...
+};
 
     function getTempAt(x, y) {
         return 150 * Math.exp(-0.1 * (x**2 + y**2)) + 40;
