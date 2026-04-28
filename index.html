@@ -1,83 +1,70 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Análise Térmica Industrial</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <meta charset="UTF-8">
+    <title>Análise Térmica Industrial</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Análise Térmica Industrial</h1>
-        <p>Cálculo de Energia Térmica via Integral Dupla em Chapa de Alumínio</p>
-    </header>
+    <header>
+        <h1>Análise Térmica Industrial</h1>
+        <p>Estudo de Integral Dupla sobre Chapas de Alumínio</p>
+    </header>
 
-    <main class="grid-principal">
-        <section class="coluna-visual">
-            <div class="card-visual">
-                <h3>1. Distribuição de Temperatura T(x,y)</h3>
-                <div id="plot3d" class="plotly-graph"></div>
-            </div>
+    <main>
+        <section class="coluna-visual">
+            <div class="container-visualizacao">
+                <h3>1. Distribuição de Temperatura T(x,y) [3D]</h3>
+                <div id="plot3d"></div>
+            </div>
 
-            <div class="card-visual">
-                <h3>2. Domínio da Chapa D</h3>
-                <canvas id="meuGrafico2d" width="400" height="300"></canvas>
-                <p class="legenda">Representação do elemento de área \( dA = dx \cdot dy \) no domínio retangular.</p>
-            </div>
+        <div class="container-visualizacao">
+            <h3>2. Domínio da Chapa D [2D]</h3>
+            <canvas id="meuGrafico2d" width="400" height="300"></canvas>
+            <p style="font-size: 0.8rem; text-align: center; color: #666;">
+                Representação do elemento de área \( dA = dx \cdot dy \) no domínio retangular.
+            </p>
+        </div>
+        </section>
 
-            <div class="card-visual">
-                <h3>3. Corte Transversal (Perfil em y=0)</h3>
-                <canvas id="graficoCorte" width="400" height="300"></canvas>
-                <p class="legenda">Visualização da fatia diferencial onde o volume vira área.</p>
-            </div>
-        </section>
+        <section class="coluna-memorial">
+            <div class="card-resultado">
+                <h3>Resultado Final</h3>
+                <div class="valor-destaque">Q ≈ 4.564,48 cal</div>
+            </div>
 
-        <section class="coluna-memorial">
-            <div class="card-resultado">
-                <h3>Resultado Final</h3>
-                <div class="valor-destaque">Q ≈ 4.564,48 cal</div>
-            </div>
+            <button class="btn-aba" id="btn-toggle">▶ Mostrar Desenvolvimento Algébrico</button>
+            <div id="conteudo-calculo" class="hidden">
 
-            <div class="abas-controles">
-                <button class="btn-aba" id="btn-toggle">
-                    <span class="icone">▶</span> Desenvolvimento Algébrico
-                </button>
-                <div id="conteudo-calculo" class="hidden aba-conteudo">
-                    <div class="math-box">
-                        <h3>Memorial de Cálculo Detalhado</h3>
-                        <p>Capacidade térmica volumétrica do alumínio (\(\rho \cdot c\)) = \(0,594\).</p>
-                        
-                        <strong>1. Integral Geral:</strong>
-                        \[ Q = 0,594 \iint_D \, dA \]
-                        
-                        <div class="resultado-inline">
-                            <strong>\( Q_{total} \approx 4.564,48 \text{ cal} \)</strong>
-                        </div>
-                    </div>
-                </div>
+<div class="math-box">
+    <strong>Memorial de Cálculo Detalhado</strong><br><br>
+    
+    <p>Para calcular a energia térmica total \((Q\)), utilizamos as propriedades do alumínio onde o produto da densidade pelo calor específico (\(\rho \cdot c\)) resulta em \(0,594\).</p>
 
-                <button class="btn-aba btn-verde" id="btn-analise">
-                    <span class="icone">▶</span> Análise e Interpretação Física
-                </button>
-                <div id="conteudo-analise" class="hidden aba-conteudo">
-                    <div class="math-box fisica-box">
-                        <h3>Interpretação Física</h3>
-                        <ul>
-                            <li><strong>Material:</strong> Alumínio (\(\rho \cdot c = 0,594\)).</li>
-                            <li><strong>Segurança:</strong> Pico de temperatura é de 190°C. O ponto de fusão do alumínio é 660°C, garantindo a integridade estrutural.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+    <strong>1. Montagem da Integral Dupla:</strong><br>
+    <p>Esta integral representa a soma de toda a energia térmica sobre a superfície da chapa D.</p>
+    \[ Q = 0,594 \iint_D [150e^{-0,1(x^2+y^2)} + 40] \, dA \]<br><br>
 
-    <footer>
-        <p>&copy; 2023 - Projeto de Licenciatura em Matemática</p>
-    </footer>
+    <strong>2. Divisão por Linearidade:</strong><br>
+    <p>Separamos o cálculo em duas partes: a energia do pico central (gaussiana) e a energia basal constante.</p>
+    \[ Q = 0,594 \left( \iint_D 150e^{-0,1(x^2+y^2)} dA + \iint_D 40 dA \right) \]<br><br>
 
-    <script src="script.js"></script>
+    <strong>3. Aplicação do Teorema de Fubini:</strong><br>
+    <p>Como o domínio \(D\) é retangular, separamos as variáveis \(x\) e \(y\) para resolver como integrais simples. O diferencial de área torna-se \(dA = dx \cdot dy\).</p>
+    \[ Q_{pico} = 89,1 \left( \int_{-5}^{5} e^{-0,1x^2} dx \right) \left( \int_{-4}^{4} e^{-0,1y^2} dy \right) \]<br><br>
+
+    <strong>4. Resultado Final:</strong><br>
+    <p>Somando as componentes de energia calculadas numericamente:</p>
+    <div style="text-align: center; font-size: 1.2rem; background: #e8f4fd; padding: 10px; border-radius: 5px;">
+        <strong>\( Q \approx 4.084,34 + 1.900,8 = 4.564,48 \text{ cal} \)</strong>
+    </div>
+</div>
+</div>
+            </div>
+        </section>
+    </main>
+    <script src="script.js"></script>
 </body>
 </html>
