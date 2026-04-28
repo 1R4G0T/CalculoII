@@ -59,19 +59,46 @@ window.onload = function() {
         ctx.fillRect(cx + 2 * escala, cy - 2 * escala, 15, 15);
     }
 
-    // Perfil de Corte
+    // --- GRÁFICO DE CORTE (Perfil Lateral em y=0) ---
     const cvCorte = document.getElementById('graficoCorte');
     if (cvCorte) {
         const ctx = cvCorte.getContext('2d');
-        const cx = cvCorte.width / 2; const cy = cvCorte.height - 50;
+        const cx = cvCorte.width / 2; 
+        const cy = cvCorte.height - 50; 
+
+        ctx.clearRect(0, 0, cvCorte.width, cvCorte.height);
+
+        // 1. Eixo X (Chão do gráfico)
+        ctx.strokeStyle = '#333';
+        ctx.beginPath();
+        ctx.moveTo(20, cy); ctx.lineTo(cvCorte.width - 20, cy);
+        ctx.stroke();
+
+        // 2. Desenha a Curva de Temperatura
         ctx.beginPath();
         ctx.strokeStyle = '#e67e22';
         ctx.lineWidth = 2;
         for(let x = -6; x <= 6; x += 0.1) {
             let posX = cx + x * escala;
-            let posY = cy - (getTempAt(x, 0) * 0.8);
+            let posY = cy - (getTempAt(x, 0) * 0.8); 
             if(x === -6) ctx.moveTo(posX, posY); else ctx.lineTo(posX, posY);
         }
         ctx.stroke();
+
+        // 3. O PILAR DIFERENCIAL (Representando dx)
+        // Definimos o pilar em x = 2 para coincidir com o gráfico 2D
+        const xPosSimulado = 2;
+        const posX = cx + xPosSimulado * escala;
+        const larguraDx = 15; // Largura visual do dx
+        const alturaPilar = getTempAt(xPosSimulado, 0) * 0.8;
+        
+        // Desenha o preenchimento do pilar
+        ctx.fillStyle = 'rgba(231, 76, 60, 0.6)';
+        ctx.fillRect(posX, cy - alturaPilar, larguraDx, alturaPilar);
+        
+        // Adiciona os textos indicativos
+        ctx.fillStyle = '#333';
+        ctx.font = '12px Arial';
+        ctx.fillText('T(x,0)', posX - 10, cy - alturaPilar - 10);
+        ctx.fillText('dx', posX + 2, cy + 15);
     }
-};
