@@ -1,146 +1,28 @@
-:root { 
-    --primaria: #2c3e50; 
-    --secundaria: #2980b9; 
-    --sucesso: #2ecc71; 
-    --fundo: #f4f7f6; 
+/* Limita a largura da coluna da direita para os botões não esticarem */
+.coluna-memorial {
+    max-width: 450px;
 }
 
-* { box-sizing: border-box; } /* Regra de ouro para evitar transbordamento */
-
-body { 
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-    background: var(--fundo); 
-    margin: 0; 
-    padding: 20px; 
-    color: #333; 
-}
-
-header { 
-    text-align: center; 
-    background: var(--primaria); 
-    color: white; 
-    padding: 25px; 
-    border-radius: 12px; 
-    margin-bottom: 25px; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-
-main {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr; /* Aumenta um pouco a coluna dos gráficos */
-    gap: 20px;
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-/* Garante que os containers tenham a mesma aparência */
-.container-visualizacao, .card-resultado, .math-box {
-    background: white;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    margin-bottom: 20px;
-    border: 1px solid #eee;
-}
-
-/* Ajuste para as abas não "empurrarem" tudo para baixo de forma desordenada */
-#conteudo-calculo, #conteudo-analise {
-    margin-top: 10px;
-}
-
-/* Melhora a visualização dos botões */
-.btn-aba {
-    margin-bottom: 10px;
-    display: block;
-    width: 100%;
-}
-
-/* Containers de Gráficos e Canvas */
-.container-visualizacao {
-    width: 100%;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-}
-
-#plot3d { width: 100%; height: 350px; }
-
-canvas { 
-    border: 1px solid #eee; 
-    border-radius: 8px; 
-    display: block;
-    margin: 0 auto;
-    max-width: 100%; 
-    height: auto;
-}
-
-/* Coluna de Memorial e Resultados */
-.card-resultado { 
-    background: var(--sucesso); 
-    color: white; 
-    padding: 30px; 
-    border-radius: 10px; 
-    text-align: center; 
-    margin-bottom: 15px; 
-    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
-}
-
-.valor-destaque { 
-    font-size: 2.5rem; 
-    font-weight: bold; 
-    display: block;
-    margin-top: 10px;
-}
-
-/* Botões das Abas */
-.btn-aba {
-    width: 100%;
-    padding: 14px;
-    border: none;
-    border-radius: 6px;
-    color: white;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: left;
-    margin-bottom: 8px;
+.abas-container {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    gap: 10px;
 }
 
-#btn-toggle { background-color: var(--secundaria); }
-#btn-toggle:hover { background-color: #3498db; transform: translateX(5px); }
-
-#btn-analise { background-color: #27ae60; }
-#btn-analise:hover { background-color: #2ecc71; transform: translateX(5px); }
-
-/* Boxes de Conteúdo Matemático */
-.hidden {
-    display: none !important;
-}
-.math-box { 
-    background: #fff; 
-    border-left: 5px solid var(--secundaria); 
-    padding: 20px; 
-    margin-top: 5px;
-    border-radius: 0 8px 8px 0;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
-    max-height: 500px;
-    overflow-y: auto;
+.legenda {
+    font-size: 0.8rem;
+    text-align: center;
+    color: #666;
+    margin-top: 10px;
 }
 
-.math-box hr {
-    border: 0;
-    border-top: 1px solid #eee;
-    margin: 20px 0;
+/* Garante que o gráfico Plotly ocupe o espaço corretamente */
+#plot3d {
+    width: 100%;
+    min-height: 350px;
 }
 
-/* Responsividade para Tablets e Celulares */
-@media (max-width: 900px) { 
-    main { grid-template-columns: 1fr; } 
-    header { padding: 15px; }
+/* Feedback visual de clique */
+.btn-aba:active {
+    transform: scale(0.98);
 }
