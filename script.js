@@ -1,5 +1,5 @@
 window.onload = function() {
-    // 1. Lógica do Botão (Unificada e Corrigida)
+    // 1. Lógica do Botão
     const btn = document.getElementById('btn-toggle');
     const conteudo = document.getElementById('conteudo-calculo');
 
@@ -9,104 +9,98 @@ window.onload = function() {
             this.innerText = estaEscondido ? "▶ Mostrar Desenvolvimento Algébrico" : "▼ Esconder Desenvolvimento Algébrico";
             
             if (!estaEscondido && window.MathJax) {
-                MathJax.typesetPromise([conteudo]).catch(function (err) {
-                    console.log('Erro ao renderizar MathJax: ' + err.message);
-                });
+                MathJax.typesetPromise([conteudo]);
             }
         };
     }
 
-    // 2. Gráfico 3D (Distribuição de Calor)
-    const x = [], y = [], z = [];
-    for(let i=-6; i<=6; i+=0.4) x.push(i);
-    for(let j=-5; j<=5; j+=0.4) y.push(j);
+    // Função auxiliar para calcular a temperatura em qualquer ponto
+    function getTempAt(x, y) {
+        return 150 * Math.exp(-0.1 * (x**2 + y**2)) + 40;
+    }
 
-    for(let j=0; j<y.length; j++) {
+    // 2. Gráfico 3D (Plotly)
+    const xValues = [], yValues = [], zValues = [];
+    for(let i=-6; i<=6; i+=0.4) xValues.push(i);
+    for(let j=-5; j<=5; j+=0.4) yValues.push(j);
+
+    for(let j=0; j<yValues.length; j++) {
         let row = [];
-        for(let i=0; i<x.length; i++) {
-            let val = 150 * Math.exp(-0.1 * (x[i]**2 + y[j]**2)) + 40;
-            row.push(val);
+        for(let i=0; i<xValues.length; i++) {
+            row.push(getTempAt(xValues[i], yValues[j]));
         }
-        z.push(row);
+        zValues.push(row);
     }
 
     Plotly.newPlot('plot3d', [{
-        z: z, x: x, y: y, type: 'surface', colorscale: 'Hot'
-    }], {
-        margin: {l:0, r:0, b:0, t:0},
-        scene: { 
-            xaxis: {title: 'X (cm)'}, 
-            yaxis: {title: 'Y (cm)'}, 
-            zaxis: {title: 'T (°C)'} 
-        }
-    });
+        z: zValues, x: xValues, y: yValues, type: 'surface', colorscale: 'Hot'
+    }], { margin: {l:0, r:0, b:0, t:0} });
 
-    // 3. Gráfico 2D (Corrigido: era aqui o erro 'onst')
-    const cv = document.getElementById('meuGrafico2d');
-    if (cv) {
-        const ctx = cv.getContext('2d');
-        const escala = 25; 
-        const cx = cv.width / 2; 
-        const cy = cv.height / 2; 
+    // 3. Configurações Comuns para os Canvas
+    const escala = 25; 
 
-        ctx.clearRect(0, 0, cv.width, cv.height);
+    // --- GRÁFICO 2D (Domínio D) ---
+    const cv2d = document.getElementById('meuGrafico2d');
+    if (cv2d) {
+        const ctx = cv2d.getContext('2d');
+        const cx = cv2d.width / 2;
+        const cy = cv2d.height / 2;
 
-        // a. Desenha o Domínio Retangular (Chapa D)
-        ctx.fillStyle = 'rgba(52, 152, 219, 0.15)'; 
-        ctx.strokeStyle = '#2980b9'; 
-        ctx.lineWidth = 2;
+        ctx.clearRect(0, 0, cv2d.width, cv2d.height);
+        
+        // Desenho da Chapa D
+        ctx.fillStyle = 'rgba(52, 152, 219, 0.15)';
         ctx.fillRect(cx - 5 * escala, cy - 4 * escala, 10 * escala, 8 * escala);
-        ctx.strokeRect(cx - 5 * escala, cy - 4 * escala, 10 * escala, 8 * escala);
-
-        // b. Eixos Cartesianos
-        ctx.strokeStyle = '#ccc'; 
-        ctx.lineWidth = 1;
+        
+        // Eixos
+        ctx.strokeStyle = '#ccc';
         ctx.beginPath();
-        ctx.moveTo(0, cy); ctx.lineTo(cv.width, cy); 
-        ctx.moveTo(cx, 0); ctx.lineTo(cx, cv.height); 
+        ctx.moveTo(0, cy); ctx.lineTo(cv2d.width, cy);
+        ctx.moveTo(cx, 0); ctx.lineTo(cx, cv2d.height);
         ctx.stroke();
 
-        // c. O PILAR DIFERENCIAL (dA = dx * dy)
-        const elX = cx + 2 * escala; 
-        const elY = cy - 2 * escala;
-        const tam = 15; 
-
+        // Pilar dA
         ctx.fillStyle = '#e74c3c';
-        ctx.fillRect(elX, elY, tam, tam);
+        ctx.fillRect(cx + 2 * escala, cy - 2 * escala, 15, 15);
+        ctx.fillText('dA', cx + 2 * escala + 2, cy - 2 * escala + 12);
+    }
 
-        // d. Legendas e Linhas de Indicação
-        ctx.strokeStyle = '#c0392b'; 
-        ctx.lineWidth = 1;
+    // --- GRÁFICO DE CORTE (Perfil Lateral em y=0) ---
+    const cvCorte = document.getElementById('graficoCorte');
+    if (cvCorte) {
+        const ctx = cvCorte.getContext('2d');
+        const cx = cvCorte.width / 2;
+        const cy = cvCorte.height - 50; // Chão do gráfico mais para baixo
+
+        ctx.clearRect(0, 0, cvCorte.width, cvCorte.height);
+
+        // Eixo X (Chão)
+        ctx.strokeStyle = '#333';
         ctx.beginPath();
-        ctx.moveTo(elX, elY + tam + 5); 
-        ctx.lineTo(elX + tam, elY + tam + 5);
-        ctx.moveTo(elX + tam + 5, elY); 
-        ctx.lineTo(elX + tam + 5, elY + tam);
+        ctx.moveTo(20, cy); ctx.lineTo(cvCorte.width - 20, cy);
         ctx.stroke();
 
+        // Desenha a Curva de Temperatura (Perfil)
+        ctx.beginPath();
+        ctx.strokeStyle = '#e67e22';
+        ctx.lineWidth = 2;
+        for(let x = -6; x <= 6; x += 0.1) {
+            let posX = cx + x * escala;
+            let posY = cy - (getTempAt(x, 0) * 0.8); // 0.8 é escala visual de altura
+            if(x === -6) ctx.moveTo(posX, posY);
+            else ctx.lineTo(posX, posY);
+        }
+        ctx.stroke();
+
+        // O PILAR DIFERENCIAL (Representando a fatia dx)
+        const posX = cx + 2 * escala;
+        const alturaPilar = getTempAt(2, 0) * 0.8;
+        
+        ctx.fillStyle = 'rgba(231, 76, 60, 0.7)';
+        ctx.fillRect(posX, cy - alturaPilar, 15, alturaPilar);
+        
         ctx.fillStyle = '#333';
-        ctx.font = '12px Arial';
-        ctx.fillText('dx', elX + tam/4, elY + tam + 18);
-        ctx.fillText('dy', elX + tam + 10, elY + tam/1.5);
-        ctx.fillText('dA', elX + 2, elY + tam - 3);
-
-        const cvCorte = document.getElementById('graficoCorte');
-if (cvCorte) {
-    const ctx = cvCorte.getContext('2d');
-    // Desenha a curva 150 * exp(-0.1 * x^2) + 40
-    ctx.beginPath();
-    ctx.strokeStyle = '#e67e22'; // Laranja
-    for(let x = -6; x <= 6; x += 0.1) {
-        let posX = cx + x * escala;
-        let posY = cy - (150 * Math.exp(-0.1 * (x**2)) + 40) * 0.5; // Escala de altura
-        if(x === -6) ctx.moveTo(posX, posY);
-        else ctx.lineTo(posX, posY);
-    }
-    ctx.stroke();
-
-    // Desenha o PILAR lateral (um retângulo de base dx)
-    ctx.fillStyle = 'rgba(231, 76, 60, 0.7)';
-    ctx.fillRect(cx + 2 * escala, cy - (getTempAt(2,0) * 0.5), 15, (getTempAt(2,0) * 0.5));
-}
+        ctx.fillText('T(x,0)', posX - 10, cy - alturaPilar - 10);
+        ctx.fillText('dx', posX + 2, cy + 15);
     }
 };
