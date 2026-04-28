@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio Térmico - Análise de Chapa</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es6/core.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Análise de Energia Térmica</h1>
+        <p>Estudo de caso: Indústria Metalúrgica de Alumínio</p>
+    </header>
+
+    <main>
+        <section id="grafico-container">
+            <h2>Distribuição de Temperatura $T(x,y)$</h2>
+            <div id="plot3d"></div>
+        </section>
+
+        <section id="calculo-container">
+            <h2>Memorial de Cálculo</h2>
+            <div class="card">
+                <h3>1. Modelagem</h3>
+                <p>A quantidade total de calor $Q$ é calculada pela integral dupla:</p>
+                <p class="formula">$$Q = \iint_D \rho c T(x,y) \, dA$$</p>
+            </div>
+
+            <div class="card">
+                <h3>2. Parâmetros e Resultados</h3>
+                <ul>
+                    <li><strong>Densidade ($\rho$):</strong> 2,70 g/cm³</li>
+                    <li><strong>Calor Específico ($c$):</strong> 0,22 cal/g °C</li>
+                    <li><strong>Área:</strong> 80 cm² ($x \in [-5,5], y \in [-4,4]$)</li>
+                </ul>
+                <hr>
+                <p><strong>Resultado Aproximado:</strong></p>
+                <h2 style="color: #e74c3c;">Q ≈ 4.564,48 calorias</h2>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
