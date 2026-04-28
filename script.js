@@ -46,59 +46,21 @@ window.onload = function() {
     });
 
     // 3. Gráfico 2D (Conceito de dA = dx * dy)
-function desenharGrafico2D() {
     const cv = document.getElementById('meuGrafico2d');
-    const ctx = cv.getContext('2d');
-    const escala = 20; // Ajuste de zoom
-    const cx = cv.width / 2;
-    const cy = cv.height / 2;
+    if (cv) {
+        const ctx = cv.getContext('2d');
+        const escala = 25; 
+        const cx = cv.width/2; 
+        const cy = cv.height/2;
 
-    // Limpar canvas
-    ctx.clearRect(0, 0, cv.width, cv.height);
-
-    // 1. Desenha a Chapa D (Retângulo principal)
-    ctx.fillStyle = 'rgba(52, 152, 219, 0.1)';
-    ctx.strokeStyle = '#2980b9';
-    ctx.lineWidth = 2;
-    // Chapa vai de x[-5, 5] e y[-4, 4]
-    ctx.fillRect(cx - 5 * escala, cy - 4 * escala, 10 * escala, 8 * escala);
-    ctx.strokeRect(cx - 5 * escala, cy - 4 * escala, 10 * escala, 8 * escala);
-
-    // 2. Desenha o Elemento de Área dA (Igual ao slide)
-    const elX = cx + 2 * escala; // Posição arbitrária para ilustrar
-    const elY = cy - 2 * escala;
-    const tam = 0.8 * escala;
-
-    ctx.fillStyle = '#e74c3c';
-    ctx.fillRect(elX, elY, tam, tam);
-
-    // Linhas de indicação dx e dy
-    ctx.strokeStyle = '#c0392b';
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    // dx (base)
-    ctx.moveTo(elX, elY + tam + 5); ctx.lineTo(elX + tam, elY + tam + 5);
-    // dy (altura)
-    ctx.moveTo(elX + tam + 5, elY); ctx.lineTo(elX + tam + 5, elY + tam);
-    ctx.stroke();
-
-    // Textos dA, dx, dy
-    ctx.fillStyle = '#333';
-    ctx.font = '12px Arial';
-    ctx.fillText('dA', elX + 2, elY + tam - 5);
-    ctx.fillText('dx', elX + tam/4, elY + tam + 18);
-    ctx.fillText('dy', elX + tam + 10, elY + tam/1.5);
-
-    // 3. Eixos Cartesianos
-    ctx.strokeStyle = '#ccc';
-    ctx.beginPath();
-    ctx.moveTo(0, cy); ctx.lineTo(cv.width, cy); // Eixo X
-    ctx.moveTo(cx, 0); ctx.lineTo(cx, cv.height); // Eixo Y
-    ctx.stroke();
-    
-    ctx.fillText('X', cv.width - 15, cy - 5);
-    ctx.fillText('Y', cx + 5, 15);
-}
+        ctx.fillStyle = 'rgba(52, 152, 219, 0.2)';
+        ctx.fillRect(cx - 5*escala, cy - 4*escala, 10*escala, 8*escala);
+        
+        ctx.strokeStyle = '#ccc';
+        ctx.beginPath();
+        ctx.moveTo(0, cy); ctx.lineTo(cv.width, cy);
+        ctx.moveTo(cx, 0); ctx.lineTo(cx, cv.height);
+        ctx.stroke();
 
         // Elemento diferencial dA (igual ao slide da aula)
         ctx.fillStyle = '#e74c3c';
