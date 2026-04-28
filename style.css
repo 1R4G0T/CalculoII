@@ -1,28 +1,162 @@
-/* Limita a largura da coluna da direita para os botões não esticarem */
-.coluna-memorial {
-    max-width: 450px;
+:root {
+    --primaria: #2c3e50;
+    --secundaria: #34495e;
+    --destaque: #3498db;
+    --sucesso: #27ae60;
+    --fundo: #f4f7f6;
+    --texto: #333;
 }
 
-.abas-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--fundo);
+    margin: 0;
+    padding: 20px;
+    color: var(--texto);
+    line-height: 1.6;
+}
+
+header, footer {
+    text-align: center;
+    background: var(--primaria);
+    color: white;
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+header p, footer p { margin: 5px 0 0; opacity: 0.8; }
+
+main.grid-principal {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr; /* Coluna da esquerda maior para gráficos */
+    gap: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+    align-items: start;
+}
+
+/* Containers Comuns (Cards) */
+.card-visual, .card-resultado, .math-box {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    margin-bottom: 25px;
+    border: 1px solid #eee;
+}
+
+h3 { margin-top: 0; color: var(--primaria); border-bottom: 2px solid #eee; padding-bottom: 10px; }
+
+/* CSS do Plotly 3D */
+.plotly-graph {
+    width: 100%;
+    min-height: 400px;
+    border-radius: 8px;
+}
+
+/* CSS dos Canvas 2D */
+canvas {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
 }
 
 .legenda {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     text-align: center;
-    color: #666;
+    color: #7f8c8d;
     margin-top: 10px;
+    font-style: italic;
 }
 
-/* Garante que o gráfico Plotly ocupe o espaço corretamente */
-#plot3d {
+/* Coluna Direita: Resultado e Abas */
+.card-resultado {
+    background: var(--sucesso);
+    color: white;
+    padding: 35px;
+    margin-bottom: 15px;
+    border: none;
+    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+}
+
+.card-resultado h3 { color: white; border-color: rgba(255,255,255,0.2); }
+.valor-destaque { font-size: 3rem; font-weight: bold; margin-top: 10px; }
+
+/* Botões das Abas */
+.btn-aba {
     width: 100%;
-    min-height: 350px;
+    padding: 15px;
+    background: var(--primaria);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* Feedback visual de clique */
-.btn-aba:active {
-    transform: scale(0.98);
+.btn-aba .icone { margin-right: 15px; transition: transform 0.3s; }
+.btn-aba:hover { background: var(--secundaria); transform: translateY(-3px); }
+.btn-verde { background: var(--sucesso); }
+.btn-verde:hover { background: #2ecc71; }
+
+/* O SEGREDÃO DAS ABAS: CSS Hidden/Visible com Opacity */
+.aba-conteudo {
+    transition: all 0.4s ease-in-out;
+    overflow: hidden;
+}
+
+.hidden {
+    opacity: 0;
+    max-height: 0;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    border: none !important;
+    pointer-events: none; /* Impede cliques no conteúdo escondido */
+}
+
+.visible {
+    opacity: 1;
+    max-height: 1500px; /* Um valor alto para caber todo o memorial */
+    margin-top: 10px !important;
+    margin-bottom: 20px !important;
+    pointer-events: auto;
+}
+
+.math-box {
+    border-left: 5px solid var(--destaque);
+    background: #fafafa;
+}
+
+.math-box hr { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
+
+.resultado-inline {
+    text-align: center;
+    font-size: 1.3rem;
+    background: #e8f4fd;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #b3d7ff;
+}
+
+/* Responsividade */
+@media (max-width: 1000px) {
+    main.grid-principal { grid-template-columns: 1fr; }
+    header, footer { padding: 20px; }
+    .valor-destaque { font-size: 2.5rem; }
 }
