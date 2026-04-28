@@ -2,8 +2,9 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Cálculo II - Memorial Interativo</title>
+    <title>Cálculo II - Memorial Interativo e Visual</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
     <header>
@@ -12,12 +13,29 @@
     </header>
 
     <main>
-        <section class="painel-grafico">
-            <h2>Domínio da Chapa (D)</h2>
-            <canvas id="meuGrafico2d" width="450" height="350"></canvas>
-            <div class="formula-principal">
-                ∬<sub>D</sub> ρ · c · T(x, y) <span class="dxdy">dx dy</span>
+        <section class="painel-graficos">
+            
+            <div class="container-visualizacao">
+                <h3>1. Distribuição de Temperatura T(x,y) [3D]</h3>
+                <div id="plot3d"></div>
+                <p class="legenda-didatica">Este gráfico mostra o "sino de calor" sobre a chapa.</p>
             </div>
+
+            <div class="container-visualizacao">
+                <h3>2. Domínio D e Elemento dA [2D]</h3>
+                <canvas id="meuGrafico2d" width="400" height="300"></canvas>
+                <div class="formula-principal">
+                    ∬<sub>D</sub> ρ · c · T(x, y) <span class="dxdy">dx dy</span>
+                </div>
+                <p class="legenda-didatica">Aqui definimos a região de integração e o elemento dA.</p>
+            </div>
+
+             <div class="container-visualizacao">
+                <h3>3. Conceito Didático: O Cubinho dA em Volume</h3>
+                <div id="diagrama-da-3d"></div>
+                <p class="legenda-didatica">Representação diagramática de como dx, dy e T formam o elemento de volume.</p>
+            </div>
+
         </section>
 
         <section class="painel-info">
@@ -27,9 +45,9 @@
             </div>
 
             <div class="aba-calculo">
-                <button class="botao-aba" onclick="toggleCalculo()">▶ Mostrar Passo a Passo do Cálculo</button>
+                <button id="btn-toggle-calculo" class="botao-aba" onclick="toggleCalculo()">▶ Mostrar Passo a Passo do Cálculo</button>
                 
-                <div id="conteudo-passo-a-passo" class="escondido">
+                <div id="conteudo-calculo" class="escondido">
                     <div class="passo">
                         <h4>Passo 1: Definição da Integral</h4>
                         <p>Substituímos os valores constantes de ρ (2,7) e c (0,22), que multiplicados resultam em <strong>0,594</strong>.</p>
@@ -41,13 +59,8 @@
                     </div>
 
                     <div class="passo">
-                        <h4>Passo 3: Decomposição</h4>
-                        <p>A integral é dividida em duas partes: o calor da base constante (40°C) e o pico de calor central (exponencial).</p>
-                    </div>
-
-                    <div class="passo">
-                        <h4>Passo 4: Integração Numérica</h4>
-                        <p>Como a função exponencial não tem primitiva simples, utilizamos a aproximação numérica para chegar ao volume total de energia.</p>
+                        <h4>Passo 3: Integração Numérica</h4>
+                        <p>Devido à natureza da função exponencial, utilizamos a aproximação numérica para calcular o volume total de energia acumulada.</p>
                     </div>
                 </div>
             </div>
