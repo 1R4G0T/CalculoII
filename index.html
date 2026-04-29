@@ -3,30 +3,30 @@
     <p>Estudo de Integral Dupla sobre Chapas de Alumínio</p>
 </header>
 
-<main class="container-principal">
-    <section class="coluna-graficos">
+<main class="grid-container">
+    <section class="coluna-principal">
         <div class="card">
-            <h3 class="titulo-card">1. Distribuição de Temperatura T(x,y) [3D]</h3>
+            <h3 class="titulo-sessao">1. Distribuição de Temperatura T(x,y) [3D]</h3>
             <div id="plot3d"></div>
         </div>
-        
+
         <div class="card">
-            <h3 class="titulo-card">2. Domínio da Chapa D [2D]</h3>
+            <h3 class="titulo-sessao">2. Domínio da Chapa D [2D]</h3>
             <canvas id="meuGrafico2d"></canvas>
         </div>
     </section>
 
-    <aside class="coluna-info">
-        <div class="card resultado-card">
-            <h3 class="titulo-card">Resultado Final</h3>
-            <div class="valor">Q ≈ 4.564,48 cal</div>
+    <aside class="coluna-lateral">
+        <div class="card card-resultado">
+            <h3 class="titulo-sessao">Resultado Final</h3>
+            <p class="valor-resultado">Q ≈ 4.564,48 cal</p>
         </div>
 
-        <button id="btn-toggle" class="btn-primary">
+        <button id="btn-toggle" class="botao-desenvolvimento">
             ▶ Mostrar Desenvolvimento Algébrico
         </button>
 
-        <div id="conteudo-calculo" class="hidden card-memorial">
+        <div id="conteudo-calculo" class="hidden card">
             </div>
     </aside>
 </main>
