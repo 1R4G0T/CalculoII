@@ -1,72 +1,42 @@
-/* Reseta margens e define o fundo cinza claro */
-body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background-color: #f0f2f5;
-    margin: 0;
-    padding: 20px;
+:root {
+    --primaria: #2c3e50;
+    --sucesso: #27ae60;
+    --fundo: #f4f7f6;
 }
 
-/* Título principal no topo */
-.main-header {
-    margin-bottom: 25px;
-    padding-left: 10px;
-}
+body { font-family: sans-serif; background: var(--fundo); margin: 0; padding: 20px; }
 
-/* Configura a Grade: 60% para gráficos, 40% para resultados */
-.grid-container {
+/* Sistema de Grid para separar Gráficos do Memorial */
+.grid-principal {
     display: grid;
-    grid-template-columns: 1.6fr 1fr;
+    grid-template-columns: 1.2fr 0.8fr; 
     gap: 20px;
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
-/* Estilo do Card (O segredo do visual que você quer) */
-.card {
+.card-visual, .card-resultado, .math-box {
     background: white;
-    border-radius: 8px;
     padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     margin-bottom: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    border-top: 6px solid #1a73e8; /* Aquela linha azul do topo */
 }
 
-.titulo-sessao {
-    color: #1a73e8;
-    margin-top: 0;
-    font-size: 1.1rem;
-    font-weight: bold;
-}
+/* O segredo para as abas funcionarem */
+.hidden { display: none !important; }
 
-/* Estilo do Botão Escuro */
-.botao-desenvolvimento {
+.btn-aba {
     width: 100%;
-    background-color: #2c3e50;
-    color: white;
     padding: 15px;
+    background: var(--primaria);
+    color: white;
     border: none;
-    border-radius: 6px;
-    font-weight: bold;
+    border-radius: 5px;
     cursor: pointer;
     text-align: left;
-    margin-bottom: 10px;
-    transition: background 0.3s;
-}
-
-.botao-desenvolvimento:hover {
-    background-color: #34495e;
-}
-
-.valor-resultado {
-    font-size: 1.6rem;
     font-weight: bold;
-    color: #333;
 }
 
-/* Esconder conteúdo inicialmente */
-.hidden { display: none; }
-
-/* Ajuste para telas pequenas (celular) */
-@media (max-width: 900px) {
-    .grid-container { grid-template-columns: 1fr; }
-}
+.card-resultado { background: var(--sucesso); color: white; text-align: center; }
+.valor-destaque { font-size: 2.5rem; font-weight: bold; }
