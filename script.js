@@ -124,3 +124,18 @@ window.onload = function() {
     Plotly.newPlot('plot3d', [{z: zV, x: xV, y: yV, type: 'surface', colorscale: 'Hot'}], 
     {margin: {l:0, r:0, b:0, t:0}, autosize: true});
 };
+Plotly.newPlot('plot3d', [{
+    z: zV, x: xV, y: yV, 
+    type: 'surface', 
+    colorscale: 'Blues', // Azul minimalista
+    reversescale: true
+}], { 
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    scene: {
+        xaxis: { gridcolor: '#334155', color: '#94a3b8' },
+        yaxis: { gridcolor: '#334155', color: '#94a3b8' },
+        zaxis: { gridcolor: '#334155', color: '#94a3b8' }
+    },
+    margin: {l:0, r:0, b:0, t:0}
+});
