@@ -27,6 +27,17 @@
         </button>
 
         <div id="conteudo-calculo" class="hidden card">
+            <h4 style="color: #1a73e8; margin-top: 0;">Memorial de Cálculo</h4>
+            <p>Considerando a densidade e o calor específico do alumínio ($\rho \cdot c = 0,594$):</p>
+            
+            <div style="font-size: 0.9rem; overflow-x: auto;">
+                \[ Q = 0,594 \iint_D [150e^{-0,1(x^2+y^2)} + 40] \, dA \]
+                <p><strong>Passo 1:</strong> Integração da base constante:</p>
+                \[ Q_{base} = 0,594 \times (Area) \times 40 = 1.900,8 \text{ cal} \]
+                <p><strong>Passo 2:</strong> Integração da Gaussiana via Fubini:</p>
+                \[ \int_{-5}^{5} e^{-0,1x^2} dx \approx 4,31 \]
+                <p><strong>Total:</strong> $Q \approx 4.564,48 \text{ cal}$</p>
             </div>
+        </div>
     </aside>
 </main>
