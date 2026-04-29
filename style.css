@@ -2,28 +2,30 @@
     --primaria: #2c3e50;
     --sucesso: #27ae60;
     --fundo: #f4f7f6;
+    --azul-card: #1a73e8;
 }
 
-body { font-family: sans-serif; background: var(--fundo); margin: 0; padding: 20px; }
+body { font-family: 'Segoe UI', sans-serif; background: var(--fundo); margin: 0; padding: 20px; }
 
-/* Sistema de Grid para separar Gráficos do Memorial */
 .grid-principal {
     display: grid;
-    grid-template-columns: 1.2fr 0.8fr; 
+    grid-template-columns: 1.2fr 0.8fr; /* Divide a tela em 60% e 40% */
     gap: 20px;
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
 }
 
-.card-visual, .card-resultado, .math-box {
+.card-visual {
     background: white;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-top: 5px solid var(--azul-card); /* Linha azul característica */
     margin-bottom: 20px;
 }
 
-/* O segredo para as abas funcionarem */
+canvas { width: 100% !important; height: auto !important; }
+
 .hidden { display: none !important; }
 
 .btn-aba {
@@ -34,9 +36,14 @@ body { font-family: sans-serif; background: var(--fundo); margin: 0; padding: 20
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    text-align: left;
     font-weight: bold;
+    margin-top: 10px;
 }
 
-.card-resultado { background: var(--sucesso); color: white; text-align: center; }
-.valor-destaque { font-size: 2.5rem; font-weight: bold; }
+.card-resultado { 
+    background: var(--sucesso); 
+    color: white; 
+    text-align: center; 
+    border-radius: 8px;
+    padding: 20px;
+}
