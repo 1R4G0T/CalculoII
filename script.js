@@ -33,34 +33,6 @@ window.onload = function() {
 
     // === 3. RENDERIZAÇÃO DOS GRÁFICOS (CANVAS 2D) ===
     function renderizarDesenhos2D() {
-        // --- Domínio 2D (Chapa e dA) ---
-        const cv2d = document.getElementById('meuGrafico2d');
-        if (cv2d) {
-            cv2d.width = cv2d.parentElement.clientWidth - 40;
-            cv2d.height = 300;
-            const ctx = cv2d.getContext('2d');
-            const cx = cv2d.width / 2; const cy = cv2d.height / 2;
-
-            ctx.clearRect(0, 0, cv2d.width, cv2d.height);
-            
-            // Eixos e Grade
-            ctx.strokeStyle = '#eee';
-            for(let i = -6; i <= 6; i++) {
-                ctx.beginPath(); ctx.moveTo(cx + i*escala, 0); ctx.lineTo(cx + i*escala, cv2d.height); ctx.stroke();
-                ctx.beginPath(); ctx.moveTo(0, cy + i*escala); ctx.lineTo(cv2d.width, cy + i*escala); ctx.stroke();
-            }
-
-            // Eixos Principais
-            ctx.strokeStyle = '#333'; ctx.lineWidth = 2;
-            ctx.beginPath(); ctx.moveTo(20, cy); ctx.lineTo(cv2d.width-20, cy); ctx.stroke();
-            ctx.beginPath(); ctx.moveTo(cx, 20); ctx.lineTo(cx, cv2d.height-20); ctx.stroke();
-
-            // dA (Elemento diferencial)
-            ctx.fillStyle = 'rgba(231, 76, 60, 0.7)';
-            ctx.fillRect(cx + 1.5*escala, cy - 2*escala, 18, 18);
-            ctx.fillStyle = '#c0392b';
-            ctx.fillText('dA = dx.dy', cx + 1.5*escala, cy - 2.2*escala);
-        }
 
         // --- Perfil de Corte (Corte em Y=0) ---
         const cvCorte = document.getElementById('graficoCorte');
