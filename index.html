@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Análise Térmica - Engenharia e Matemática</title>
     <link rel="stylesheet" href="style.css">
-    
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
@@ -38,39 +37,11 @@
         </section>
 
         <aside class="coluna-memorial">
-                                    <strong>Memorial de Cálculo Detalhado</strong>
-
-                        <p>Capacidade térmica volumétrica do alumínio (\(\rho \cdot c\)) = \(0,594\).</p>
-
-                        
-
-                        <strong>1. Integral Geral:</strong>
-
-                        \[ Q = 0,594 \iint_D [150e^{-0,1(x^2+y^2)} + 40] \, dA \]
-
-
-
-                        <strong>2. Separação por Linearidade:</strong>
-
-                        \[ Q = 0,594 \left( \iint_D 150e^{-0,1(x^2+y^2)} dA + \iint_D 40 dA \right) \]
-
-
-
-                        <strong>3. Resolução do Pico (Fubini):</strong>
-
-                        \[ Q_{pico} = 89,1 \left( \int_{-5}^{5} e^{-0,1x^2} dx \right) \left( \int_{-4}^{4} e^{-0,1y^2} dy \right) \]
-
-
-
-                        <strong>4. Resolução da Base Constante:</strong>
-
-                        \[ Q_{base} = 0,594 \times (10 \times 8) \times 40 = 1.900,8 \text{ cal} \]
-
-
-
-                        <div style="text-align: center; margin-top:15px; padding:10px; background:#e8f4fd; border-radius:8px;">
-
-                            <strong>Resultado: \( Q_{total} \approx 4.564,48 \text{ cal} \)</strong>
+            
+            <div class="card-resultado">
+                <h3>Resultado Final (Energia Total)</h3>
+                <div class="valor-destaque">Q ≈ 4.564,48 cal</div>
+            </div>
 
             <button class="btn-aba" id="btn-toggle">
                 ▶ Mostrar Desenvolvimento Algébrico
@@ -78,52 +49,32 @@
             
             <div id="conteudo-calculo" class="hidden aba-conteudo">
                 <div class="math-box">
-                    <strong>1. Modelagem Matemática:</strong>
-                    \[ Q = \rho \cdot c \iint_D T(x,y) \, dA \]
-                    <p>Onde \( \rho \cdot c = 0,594 \) para o alumínio.</p>
+                    <strong>Memorial de Cálculo Detalhado</strong>
+                    <p>Capacidade térmica do alumínio (\(\rho \cdot c\)) = \(0,594\).</p>
                     
-                    <strong>2. Integral Resolvida:</strong>
-                    \[ Q = 0,594 \int_{-5}^{5} \int_{-4}^{4} (150e^{-0,1(x^2+y^2)} + 40) \, dy \, dx \]
-                </div>
-                
-                <button class="btn-aba" id="btn-analise" style="background-color: #27ae60;">
-                    ▶ Mostrar Análise Física
-                </button>
+                    <p><strong>1. Integral Geral:</strong></p>
+                    \[ Q = 0,594 \iint_D [150e^{-0,1(x^2+y^2)} + 40] \, dA \]
 
-                <div id="conteudo-analise" class="hidden">
-                    <div class="math-box" style="border-left: 5px solid #27ae60;">
-                        <strong>Interpretação Técnica:</strong>
-                        <ul>
-                              <strong>1. Cenários Alternativos:</strong>
+                    <p><strong>2. Linearidade e Fubini:</strong></p>
+                    \[ Q = 0,594 \left( \iint_D T_{pico} dA + \iint_D T_{base} dA \right) \]
+                    
+                    <div style="text-align: center; margin: 15px 0; padding: 10px; background: #e8f4fd; border-radius: 8px;">
+                        <strong>Resultado Total: \( Q \approx 4.564,48 \text{ cal} \)</strong>
+                    </div>
 
-        <ul>
+                    <button class="btn-aba" id="btn-analise" style="background-color: #27ae60;">
+                        ▶ Mostrar Análise Física
+                    </button>
 
-            <li><strong>Dimensões:</strong> Se aumentarmos a chapa para \(100 \times 100 \text{ cm}\), a integral cobriria uma área maior, capturando mais energia basal e aumentando drasticamente o valor de \(Q\).</li>
-
-            <li><strong>Material:</strong> Se trocarmos o Alumínio pelo Cobre (\(\rho \cdot c \approx 0,80\)), a mesma temperatura resultaria em mais calor acumulado devido à maior densidade do cobre.</li>
-
-            <li><strong>Padrão de Aquecimento:</strong> Alterar o expoente da função gaussiana mudaria a concentração do calor. Um expoente maior tornaria o resfriamento nas bordas mais rápido.</li>
-
-        </ul>
-
-
-
-        <hr>
-
-
-
-        <strong>2. Interpretação Física:</strong>
-
-        <p><strong>O que significa \(Q \approx 4.564,48 \text{ cal}\)?</strong> É a quantidade total de energia térmica que a chapa "segura" no momento do pico de aquecimento.</p>
-
-        
-
-        <p><strong>Riscos Térmicos:</strong> O ponto de fusão do alumínio é **660°C**. Como nosso pico é de **190°C** (\(150 + 40\)), não há risco de derretimento, mas o gradiente térmico pode causar empenamento por dilatação diferencial.</p>
-
-        
-
-        <p><strong>Impacto na Fabricação:</strong> Esse cálculo permite prever o tempo de resfriamento necessário antes que um operador ou robô possa manipular a peça sem causar deformações ou acidentes.</p>
-                        </ul>
+                    <div id="conteudo-analise" class="hidden">
+                        <div class="math-box" style="border-left: 5px solid #27ae60; margin-top: 10px;">
+                            <strong>Interpretação Técnica:</strong>
+                            <ul>
+                                <li><strong>Fusão:</strong> Pico de 190°C (Seguro: Alumínio funde a 660°C).</li>
+                                <li><strong>Material:</strong> Se fosse Cobre, o calor acumulado seria maior (\(\rho \cdot c \approx 0,80\)).</li>
+                                <li><strong>Segurança:</strong> O cálculo prevê o tempo de resfriamento para manuseio robótico.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
