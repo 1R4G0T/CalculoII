@@ -43,18 +43,40 @@
             
             <div id="conteudo-calculo" class="hidden aba-conteudo">
                 <div class="math-box">
-                    <strong>Memorial de Cálculo Detalhado</strong>
-                    <p>Capacidade térmica do alumínio (\(\rho \cdot c\)) = \(0,594\).</p>
-                    
-                    <p><strong>1. Integral Geral:</strong></p>
-                    \[ Q = 0,594 \iint_D [150e^{-0,1(x^2+y^2)} + 40] \, dA \]
+<div id="conteudo-calculo" class="hidden aba-conteudo">
+    <div class="math-box">
+        <h4 style="color: var(--azul-primario); margin-top: 0;">Memorial de Cálculo Detalhado</h4>
+        
+        <p>Para calcular a energia térmica total $Q$, integramos a função de temperatura $T(x,y)$ sobre a região retangular $D = [-5, 5] \times [-4, 4]$, multiplicada pela constante térmica do alumínio ($\rho \cdot c = 0,594$).</p>
 
-                    <p><strong>2. Linearidade e Fubini:</strong></p>
-                    \[ Q = 0,594 \left( \iint_D T_{pico} dA + \iint_D T_{base} dA \right) \]
-                    
-                    <div style="text-align: center; margin: 15px 0; padding: 10px; background: #e8f4fd; border-radius: 8px;">
-                        <strong>Resultado Total: \( Q \approx 4.564,48 \text{ cal} \)</strong>
-                    </div>
+        <strong>1. Definição da Integral:</strong>
+        \[ Q = 0,594 \int_{-5}^{5} \int_{-4}^{4} \left( 150e^{-0,1(x^2+y^2)} + 40 \right) \, dy \, dx \]
+
+        <strong>2. Separação de Termos (Linearidade):</strong>
+        <p>Podemos dividir a integral em duas partes: o calor da base constante ($Q_{base}$) e o calor do pico térmico ($Q_{pico}$):</p>
+        \[ Q = 0,594 \left[ \iint_D 40 \, dA + 150 \iint_D e^{-0,1x^2} \cdot e^{-0,1y^2} \, dA \right] \]
+
+        <strong>3. Cálculo da Base Constante:</strong>
+        <p>Como a base é constante, o volume é simplesmente $V = \text{Área} \times \text{Altura}$:</p>
+        \[ Q_{base} = 0,594 \times (10 \times 8) \times 40 = 1.900,80 \text{ cal} \]
+
+        <strong>4. Cálculo do Pico (Teorema de Fubini):</strong>
+        <p>Pela propriedade de exponenciais, separamos as variáveis:</p>
+        \[ Q_{pico} = 89,1 \left( \int_{-5}^{5} e^{-0,1x^2} dx \right) \times \left( \int_{-4}^{4} e^{-0,1y^2} dy \right) \]
+        <p>Utilizando aproximações numéricas para as integrais gaussianas:</p>
+        \[ Q_{pico} \approx 89,1 \times (4,312) \times (4,032) \approx 2.663,68 \text{ cal} \]
+
+        <div style="text-align: center; margin-top: 20px; padding: 15px; background: #1b5e20; color: white; border-radius: 8px; box-shadow: var(--shadow-forte);">
+            <strong style="font-size: 1.2rem;">Soma Total: \( Q_{total} = Q_{base} + Q_{pico} \approx 4.564,48 \text{ cal} \)</strong>
+        </div>
+
+        <button class="btn-aba" id="btn-analise" style="background-color: #27ae60; margin-top: 20px;">
+            ▶ Mostrar Análise Física
+        </button>
+        <div id="conteudo-analise" class="hidden">
+            </div>
+    </div>
+</div>
 
                     <button class="btn-aba" id="btn-analise" style="background-color: #27ae60;">
                         ▶ Mostrar Análise Física
