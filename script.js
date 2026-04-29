@@ -1,5 +1,5 @@
 window.onload = function() {
-    // 1. Controle de Abas Consolidado
+    // 1. Controle de Abas e Redimensionamento
     function configurarBotao(idBotao, idConteudo) {
         const btn = document.getElementById(idBotao);
         const conteudo = document.getElementById(idConteudo);
@@ -8,7 +8,6 @@ window.onload = function() {
                 const visivel = conteudo.classList.toggle('visible');
                 conteudo.classList.toggle('hidden', !visivel);
                 
-                // Ajusta ícone e redimensiona gráficos
                 const icone = visivel ? "▼" : "▶";
                 const texto = this.innerText.replace(/[▶▼]\s*/, "");
                 this.innerHTML = `<span class="icone">${icone}</span> ${texto}`;
@@ -27,7 +26,7 @@ window.onload = function() {
     const escala = 25;
     const getTempAt = (x, y) => 150 * Math.exp(-0.1 * (x**2 + y**2)) + 40;
 
-    // 2. Gráfico 3D (Configurado para bater com a imagem)
+    // 2. Gráfico 3D (Plotly)
     const xV = [], yV = [], zV = [];
     for(let i=-6; i<=6; i+=0.3) xV.push(i);
     for(let j=-5; j<=5; j+=0.3) yV.push(j);
@@ -37,53 +36,85 @@ window.onload = function() {
         zV.push(r);
     }
 
-    Plotly.newPlot('plot3d', [{
+    const data3d = [{
         z: zV, x: xV, y: yV, 
         type: 'surface', 
         colorscale: 'Hot',
-        colorbar: { thickness: 20, len: 0.8 } // Barra lateral de calor
-    }], {
+        colorbar: { thickness: 20, len: 0.8 }
+    }];
+
+    const layout3d = {
         margin: { l: 0, r: 0, b: 0, t: 0 },
         scene: {
             xaxis: { title: 'X' },
             yaxis: { title: 'Y' },
             zaxis: { title: 'T' },
-            camera: { eye: { x: 1.5, y: 1.5, z: 1.2 } } // Ângulo da foto
+            camera: { eye: { x: 1.6, y: 1.6, z: 1.1 } }
+        },
+        autosize: true
+    };
+
+    Plotly.newPlot('plot3d', data3d, layout3d, {responsive: true});
+
+    // 3. Renderização dos Canvas (2D e Corte)
+    function renderizarCanvas() {
+        // Gráfico 2D - Domínio
+        const cv2d = document.getElementById('meuGrafico2d');
+        if (cv2d) {
+            // Ajusta o tamanho do canvas para o tamanho da div pai
+            cv2d.width = cv2d.parentElement.clientWidth - 40;
+            cv2d.height = 300;
+            
+            const ctx = cv2d.getContext('2d');
+            const cx = cv2d.width / 2; const cy = cv2d.height / 2;
+            
+            ctx.clearRect(0, 0, cv2d.width, cv2d.height);
+            
+            // Eixos
+            ctx.strokeStyle = '#ccc';
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath(); ctx.moveTo(0, cy); ctx.lineTo(cv2d.width, cy); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx, 0); ctx.lineTo(cx, cv2d.height); ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Elemento dA
+            const dx_vis = 20;
+            ctx.fillStyle = 'rgba(231, 76, 60, 0.7)';
+            ctx.strokeStyle = '#c0392b';
+            ctx.fillRect(cx + 1.5*escala, cy - 2*escala, dx_vis, dx_vis);
+            ctx.strokeRect(cx + 1.5*escala, cy - 2*escala, dx_vis, dx_vis);
+            
+            ctx.fillStyle = '#c0392b';
+            ctx.font = 'bold 12px Arial';
+            ctx.fillText('dA = dx.dy', cx + 1.5*escala - 10, cy - 2*escala - 10);
         }
-    });
 
-    // 3. Gráfico 2D - Domínio com dA
-    const cv2d = document.getElementById('meuGrafico2d');
-    if (cv2d) {
-        const ctx = cv2d.getContext('2d');
-        const cx = cv2d.width / 2; const cy = cv2d.height / 2;
-        
-        // Eixos
-        ctx.strokeStyle = '#333';
-        ctx.beginPath(); ctx.moveTo(10, cy); ctx.lineTo(cv2d.width-10, cy); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(cx, 10); ctx.lineTo(cx, cv2d.height-10); ctx.stroke();
+        // Gráfico de Corte
+        const cvCorte = document.getElementById('graficoCorte');
+        if (cvCorte) {
+            cvCorte.width = cvCorte.parentElement.clientWidth - 40;
+            cvCorte.height = 250;
+            const ctx = cvCorte.getContext('2d');
+            const cx = cvCorte.width / 2; const cy = cvCorte.height - 40;
 
-        // Elemento dA
-        ctx.fillStyle = 'rgba(231, 76, 60, 0.7)';
-        ctx.fillRect(cx + 1.5*escala, cy - 2*escala, 18, 18);
-        ctx.fillStyle = '#c0392b';
-        ctx.font = '12px Arial';
-        ctx.fillText('dA = dx.dy', cx + 1.5*escala - 10, cy - 2*escala - 10);
+            ctx.clearRect(0, 0, cvCorte.width, cvCorte.height);
+            
+            ctx.strokeStyle = '#e67e22';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            for(let x = -6; x <= 6; x += 0.1) {
+                let px = cx + x * escala;
+                let py = cy - (getTempAt(x, 0) * 0.7);
+                if(x === -6) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+            }
+            ctx.stroke();
+            
+            ctx.fillStyle = '#333';
+            ctx.fillText('Perfil de Temperatura (y=0)', 10, 20);
+        }
     }
 
-    // 4. Gráfico de Corte
-    const cvCorte = document.getElementById('graficoCorte');
-    if (cvCorte) {
-        const ctx = cvCorte.getContext('2d');
-        const cx = cvCorte.width / 2; const cy = cvCorte.height - 40;
-
-        ctx.strokeStyle = '#e67e22';
-        ctx.beginPath();
-        for(let x = -6; x <= 6; x += 0.1) {
-            let px = cx + x * escala;
-            let py = cy - (getTempAt(x, 0) * 0.7);
-            if(x === -6) ctx.moveTo(px, py); else ctx.lineTo(px, py);
-        }
-        ctx.stroke();
-    }
+    // Inicializa e trata redimensionamento da janela
+    renderizarCanvas();
+    window.onresize = renderizarCanvas;
 };
