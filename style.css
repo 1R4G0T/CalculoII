@@ -1,49 +1,119 @@
+/* 1. Configurações de Base */
 :root {
-    --primaria: #2c3e50;
-    --sucesso: #27ae60;
-    --fundo: #f4f7f6;
-    --azul-card: #1a73e8;
+    --azul-google: #1a73e8;
+    --dark-sidebar: #2c3e50;
+    --fundo-cinza: #f8f9fa;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-body { font-family: 'Segoe UI', sans-serif; background: var(--fundo); margin: 0; padding: 20px; }
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: var(--fundo-cinza);
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
 
+header {
+    margin-bottom: 30px;
+    padding-left: 10px;
+}
+
+header h1 {
+    color: #202124;
+    margin: 0;
+    font-size: 2rem;
+}
+
+/* 2. O SISTEMA DE COLUNAS (Lado a Lado) */
 .grid-principal {
     display: grid;
-    grid-template-columns: 1.2fr 0.8fr; /* Divide a tela em 60% e 40% */
-    gap: 20px;
-    max-width: 1300px;
+    /* Divide em duas colunas: 65% para gráficos, 35% para memorial */
+    grid-template-columns: 1.3fr 0.7fr; 
+    gap: 25px;
+    max-width: 1400px;
     margin: 0 auto;
+    align-items: start; /* Impede que uma coluna estique a outra */
 }
 
-.card-visual {
+/* 3. ESTILO DOS CARDS (Com a linha azul) */
+.card-visual, .card-resultado, .aba-conteudo {
     background: white;
-    padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    border-top: 5px solid var(--azul-card); /* Linha azul característica */
-    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    border-top: 6px solid var(--azul-google); /* A linha azul do topo */
+    margin-bottom: 25px;
 }
 
-canvas { width: 100% !important; height: auto !important; }
+h3 {
+    color: var(--azul-google);
+    margin-top: 0;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+}
 
-.hidden { display: none !important; }
-
+/* 4. BOTÕES E ABAS */
 .btn-aba {
     width: 100%;
-    padding: 15px;
-    background: var(--primaria);
+    background-color: var(--dark-sidebar);
     color: white;
+    padding: 16px;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    border-radius: 6px;
     font-weight: bold;
-    margin-top: 10px;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
+    margin-bottom: 10px;
 }
 
-.card-resultado { 
-    background: var(--sucesso); 
-    color: white; 
-    text-align: center; 
-    border-radius: 8px;
-    padding: 20px;
+.btn-aba:hover {
+    background-color: #34495e;
+}
+
+.card-resultado {
+    background-color: #27ae60; /* Verde para o resultado final */
+    border-top: none;
+    color: white;
+    text-align: center;
+}
+
+.valor-destaque {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+/* 5. AJUSTES DOS GRÁFICOS */
+#plot3d {
+    width: 100%;
+    min-height: 400px;
+    border-radius: 4px;
+}
+
+canvas {
+    width: 100% !important;
+    height: auto !important;
+    background: #fff;
+}
+
+.legenda {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 10px;
+    font-style: italic;
+}
+
+/* 6. CLASSES DE UTILIDADE */
+.hidden { display: none !important; }
+
+/* 7. RESPONSIVIDADE (Para Celular) */
+@media (max-width: 1100px) {
+    .grid-principal {
+        grid-template-columns: 1fr; /* No celular, fica tudo em uma coluna */
+    }
 }
