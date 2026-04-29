@@ -1,57 +1,30 @@
-:root {
-    --bg-dark: #1e293b;
-    --bg-deep: #0f172a;
-    --accent-blue: #38bdf8;
-    --accent-green: #2ecc71;
-    --text-light: #f8fafc;
+.btn-analise-verde {
+    background-color: #27ae60 !important; /* Verde da imagem d0b2c8 */
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background 0.3s ease;
 }
 
-body {
-    background-color: var(--bg-deep);
-    color: var(--text-light);
-    font-family: 'Inter', sans-serif;
-    margin: 0; padding: 20px;
+.btn-analise-verde:hover {
+    background-color: #2ecc71 !important;
 }
 
-.grid-principal {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: 20px;
-}
-
-.card-visual, .math-box, .aba-conteudo {
-    background-color: var(--bg-dark);
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
-}
-
-/* Card de Resultado Verde conforme a imagem */
-.card-resultado {
-    background-color: var(--accent-green);
-    color: white;
-    padding: 30px;
-    border-radius: 12px;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.valor-destaque {
-    font-size: 3rem;
-    font-weight: bold;
-}
-
-.btn-aba {
-    background-color: #334155;
-    color: white;
-    width: 100%;
+.analise-tecnica {
+    background-color: #1a2433;
+    border-left: 4px solid #27ae60;
     padding: 15px;
-    border: none;
-    border-radius: 8px;
-    text-align: left;
-    cursor: pointer;
-    font-weight: bold;
+    margin-top: 10px;
+    border-radius: 0 8px 8px 0;
 }
 
-.hidden { display: none; }
+.resultado-box {
+    background-color: #e3f2fd;
+    color: #1565c0;
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
+    margin: 15px 0;
+}
