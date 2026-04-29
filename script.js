@@ -32,29 +32,7 @@ window.onload = function() {
 
     // 3. RENDERIZAÇÃO DOS GRÁFICOS 2D (Canvas)
     function renderizarCanvases() {
-        // --- Gráfico 2D: Domínio ---
-        const cv2d = document.getElementById('meuGrafico2d');
-        if (cv2d) {
-            cv2d.width = cv2d.parentElement.clientWidth;
-            cv2d.height = 300;
-            const ctx = cv2d.getContext('2d');
-            const cx = cv2d.width / 2; const cy = cv2d.height / 2;
-
-            ctx.clearRect(0, 0, cv2d.width, cv2d.height);
-            
-            // Eixos
-            ctx.strokeStyle = '#ccc';
-            ctx.beginPath(); ctx.moveTo(0, cy); ctx.lineTo(cv2d.width, cy); ctx.stroke();
-            ctx.beginPath(); ctx.moveTo(cx, 0); ctx.lineTo(cx, cv2d.height); ctx.stroke();
-
-            // dA (Elemento diferencial)
-            ctx.fillStyle = 'rgba(231, 76, 60, 0.7)';
-            ctx.fillRect(cx + 1.5*escala, cy - 2*escala, 20, 20);
-            ctx.fillStyle = '#c0392b';
-            ctx.font = '12px Arial';
-            ctx.fillText('dA = dx.dy', cx + 1.5*escala, cy - 2.2*escala);
-        }
-
+      
         // --- Gráfico de Corte: Perfil ---
         const cvCorte = document.getElementById('graficoCorte');
         if (cvCorte) {
