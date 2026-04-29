@@ -1,31 +1,37 @@
 window.onload = function() {
-    // ... (mantenha seus códigos de gráficos Plotly e Canvas aqui) ...
+    // Lógica para o Gráfico 3D (Plotly)
+    const getTempAt = (x, y) => 150 * Math.exp(-0.1 * (x**2 + y**2)) + 40;
+    const xV = [], yV = [], zV = [];
+    for(let i=-6; i<=6; i+=0.4) xV.push(i);
+    for(let j=-5; j<=5; j+=0.4) yV.push(j);
+    for(let j=0; j<yV.length; j++) {
+        let r = [];
+        for(let i=0; i<xV.length; i++) r.push(getTempAt(xV[i], yV[j]));
+        zV.push(r);
+    }
 
-    // Lógica do Botão Memorial
+    Plotly.newPlot('plot3d', [{
+        z: zV, x: xV, y: yV, type: 'surface', colorscale: 'Hot'
+    }], {
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        scene: { xaxis: {color: '#fff'}, yaxis: {color: '#fff'}, zaxis: {color: '#fff'} },
+        margin: {l:0, r:0, b:0, t:0}
+    });
+
+    // Controle do Memorial de Cálculo
     const btnToggle = document.getElementById('btn-toggle');
     const conteudoCalculo = document.getElementById('conteudo-calculo');
-
-    btnToggle.onclick = function() {
+    btnToggle.onclick = () => {
         const isHidden = conteudoCalculo.classList.toggle('hidden');
-        this.innerHTML = isHidden ? '▶ Mostrar Memorial' : '▼ Esconder Memorial';
+        btnToggle.innerHTML = isHidden ? '▶ Mostrar Desenvolvimento' : '▼ Esconder Memorial';
     };
 
-    // Lógica do Botão de Análise (O que estava faltando)
+    // Controle da Análise Física (O que precisava arrumar)
     const btnAnalise = document.getElementById('btn-analise');
     const conteudoAnalise = document.getElementById('conteudo-analise');
-
-    btnAnalise.onclick = function() {
-        const isVisible = conteudoAnalise.classList.toggle('visible');
-        conteudoAnalise.classList.toggle('hidden', !isVisible);
-        
-        // Altera o texto e o ícone do botão
-        this.innerHTML = isVisible ? 
-            '▼ Esconder Análise Física' : 
-            '▶ Mostrar Análise e Interpretação Física';
-            
-        // Força o MathJax a re-renderizar se houver fórmulas na análise
-        if (isVisible && window.MathJax) {
-            MathJax.typesetPromise([conteudoAnalise]);
-        }
+    btnAnalise.onclick = () => {
+        const isHidden = conteudoAnalise.classList.toggle('hidden');
+        btnAnalise.innerHTML = isHidden ? '▶ Mostrar Análise Física' : '▼ Esconder Análise';
+        if (!isHidden && window.MathJax) MathJax.typeset();
     };
 };
