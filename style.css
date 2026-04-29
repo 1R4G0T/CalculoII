@@ -1,30 +1,53 @@
+/* Layout Geral */
+.grid-principal {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr; /* Divide a tela proporcionalmente */
+    gap: 25px;
+    align-items: start;
+}
+
+/* Esconder conteúdo por padrão */
+.hidden { 
+    display: none !important; 
+}
+
+/* Botão de Análise (Verde) */
 .btn-analise-verde {
-    background-color: #27ae60 !important; /* Verde da imagem d0b2c8 */
+    background-color: #27ae60 !important;
+    color: white;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
     margin-top: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    transition: background 0.3s ease;
+    transition: 0.3s;
 }
 
-.btn-analise-verde:hover {
-    background-color: #2ecc71 !important;
+.btn-analise-verde:hover { background-color: #2ecc71 !important; }
+
+/* Box de Resultado interna (Azul claro) */
+.resultado-box {
+    background-color: #e3f2fd;
+    color: #1565c0;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    margin: 20px 0;
+    font-weight: bold;
+    border: 1px solid #bbdefb;
 }
 
+/* Estilo da seção de Análise */
 .analise-tecnica {
     background-color: #1a2433;
     border-left: 4px solid #27ae60;
     padding: 15px;
-    margin-top: 10px;
+    margin-top: 15px;
     border-radius: 0 8px 8px 0;
-}
-
-.resultado-box {
-    background-color: #e3f2fd;
-    color: #1565c0;
-    padding: 12px;
-    border-radius: 6px;
-    text-align: center;
-    margin: 15px 0;
+    color: #cbd5e1;
 }
