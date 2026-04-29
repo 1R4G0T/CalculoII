@@ -1,101 +1,95 @@
-/* Configurações Gerais */
+/* 1. Cores Globais e Fundo */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f4f8; /* Fundo azul claro acinzentado */
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #f0f4f7; /* Cinza azulado muito claro */
     color: #2c3e50;
     margin: 0;
-    padding: 0;
-}
-
-header {
-    background-color: #008ba3; /* Ciano escuro para o topo */
-    color: white;
     padding: 20px;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* Sistema de Grid */
+/* 2. Cabeçalho Estilo Industrial */
+header {
+    background-color: #008ba3; /* Ciano Profundo */
+    color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0, 139, 163, 0.2);
+}
+
+/* 3. Grid Principal (Lado a Lado) */
 .grid-principal {
     display: grid;
-    grid-template-columns: 1.2fr 0.8fr; /* Coluna de gráficos maior que a lateral */
-    gap: 25px;
-    padding: 25px;
-    max-width: 1400px;
-    margin: 0 auto;
+    grid-template-columns: 1.2fr 0.8fr; /* Gráficos maiores na esquerda */
+    gap: 20px;
+    align-items: start;
 }
 
-/* Estilo dos Cards */
-.card-visual, .math-box, .card-resultado {
-    background: white;
-    border-radius: 10px;
+/* 4. Cards de Visualização e Cálculos */
+.card-visual, .math-box {
+    background: #ffffff;
+    border: 1px solid #d1dbe5;
+    border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    border: 1px solid #d1d9e0;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-/* Destaque do Resultado Principal */
+/* 5. O Grande Card de Resultado (Ciano) */
 .card-resultado {
-    background-color: #e0f7fa; /* Fundo Ciano bem claro */
-    border: 2px solid #00acc1;
+    background: linear-gradient(135deg, #00acc1, #00838f);
+    color: white;
+    padding: 25px;
+    border-radius: 12px;
     text-align: center;
     margin-bottom: 20px;
 }
 
 .valor-destaque {
-    font-size: 2.2em;
-    font-weight: bold;
-    color: #007c91;
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-top: 10px;
 }
 
-/* Botões de Controle */
+/* 6. Botões de Ação */
 .btn-aba {
     width: 100%;
-    padding: 15px;
-    background-color: #37474f; /* Cinza escuro técnico */
+    padding: 14px;
+    background-color: #37474f; /* Cinza Escuro */
     color: white;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
-    font-size: 1em;
-    margin-bottom: 10px;
-    transition: background 0.3s ease;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
 }
 
 .btn-aba:hover {
     background-color: #455a64;
+    transform: translateY(-2px);
 }
 
-/* Botão de Análise (Verde conforme suas imagens) */
+/* Botão de Análise (Verde Técnico) */
 #btn-analise {
     background-color: #27ae60 !important;
-}
-
-#btn-analise:hover {
-    background-color: #2ecc71 !important;
-}
-
-/* Classes de Visibilidade */
-.hidden {
-    display: none !important;
-}
-
-.visible {
-    display: block !important;
-    animation: fadeIn 0.4s ease;
-}
-
-/* Análise Técnica Interna */
-.analise-tecnica {
-    background-color: #f1f8e9;
-    border-left: 5px solid #27ae60;
-    padding: 15px;
-    border-radius: 4px;
     margin-top: 15px;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+/* 7. Box de Resultado Interno (Ciano Suave) */
+.resultado-interno-box {
+    background-color: #e0f7fa; /* Azul Ciano claro */
+    color: #006064;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #b2ebf2;
+    margin: 15px 0;
 }
+
+/* 8. Utilitários de Exibição */
+.hidden { display: none !important; }
+.visible { display: block !important; }
