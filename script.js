@@ -28,7 +28,7 @@ window.onload = function() {
         canvas.height = 220;
         
         const cx = 220; // Centro do eixo X
-        const cy = 180; // Base do gráfico (onde T=0 teoricamente, mas aqui é o suporte visual)
+        const cy = 180; // Base do gráfico
         const escalaX = 35; // px por cm
         const escalaT = 0.7; // px por °C
 
@@ -41,8 +41,7 @@ window.onload = function() {
         ctx.stroke();
 
         // DESENHO DO PILAR dA (Encostando na Curva)
-        const xAmostra = 1.5; // Posição do pilar em x
-        // T(x,0) = 150 * e^(-0.1 * x²) + 40
+        const xAmostra = 1.5; 
         const tempNoPonto = 150 * Math.exp(-0.1 * Math.pow(xAmostra, 2)) + 40; 
         
         const larguraPilar = 25;
@@ -50,10 +49,9 @@ window.onload = function() {
         const pxPilar = cx + (xAmostra * escalaX);
         const pyPilar = cy - alturaPilarPx;
 
-        ctx.fillStyle = "rgba(255, 0, 0, 0.4)"; // Vermelho transparente
+        ctx.fillStyle = "rgba(255, 0, 0, 0.4)"; 
         ctx.strokeStyle = "red";
         ctx.lineWidth = 1;
-        // Desenha do eixo X até o topo da curva
         ctx.fillRect(pxPilar, pyPilar, larguraPilar, alturaPilarPx);
         ctx.strokeRect(pxPilar, pyPilar, larguraPilar, alturaPilarPx);
 
@@ -62,7 +60,7 @@ window.onload = function() {
         ctx.font = "bold 10px Arial";
         ctx.fillText("dA = dx.dy", pxPilar - 5, pyPilar - 8);
 
-        // DESENHO DA CURVA GAUSSIANA (Perfil de Dissipação)
+        // DESENHO DA CURVA GAUSSIANA
         ctx.strokeStyle = "#d32f2f";
         ctx.lineWidth = 3;
         ctx.beginPath();
@@ -76,23 +74,21 @@ window.onload = function() {
         }
         ctx.stroke();
 
-        // Labels dos Eixos
+        // Labels
         ctx.fillStyle = "#000";
         ctx.font = "12px Arial";
         ctx.fillText("T (°C)", cx + 10, 30);
         ctx.fillText("x (cm)", 405, cy + 15);
     }
 
-    // 3. GRÁFICO 3D (PLOTLY - DOMÍNIO RETANGULAR D)
+    // 3. GRÁFICO 3D (PLOTLY)
     const xValues = [];
     const yValues = [];
     const zValues = [];
 
-    // Gerar coordenadas reais conforme a imagem: x de -5 a 5 e y de -4 a 4
     for (let x = -5; x <= 5; x += 0.25) xValues.push(x);
     for (let y = -4; y <= 4; y += 0.25) yValues.push(y);
 
-    // Calcular a matriz de Temperaturas T(x,y)
     for (let y of yValues) {
         let row = [];
         for (let x of xValues) {
@@ -102,21 +98,21 @@ window.onload = function() {
         zValues.push(row);
     }
 
-const data3D = [{
+    const data3D = [{
         x: xValues,
         y: yValues,
         z: zValues,
         type: 'surface',
         colorscale: 'Hot',
-        showscale: true,:
-        cmin: 40,  // Valor mínimo da escala de cores
-        cmax: 190, // Valor máximo (o pico real do seu cálculo)
+        showscale: true,
+        cmin: 40,
+        cmax: 190,
         contours: {
             z: { show: true, project: { z: true }, usecolormap: true }
         }
     }];
 
-const layout3D = {
+    const layout3D = {
         title: { text: 'Distribuição de Temperatura T(x,y)', font: { size: 14 } },
         autosize: true,
         margin: { l: 0, r: 0, b: 0, t: 30 },
@@ -124,7 +120,7 @@ const layout3D = {
             xaxis: { 
                 title: 'X (cm)', 
                 range: [-5.5, 5.5],
-                tickvals: [-5, -2.5, 0, 2.5, 5], // Força o aparecimento do -5 e 5
+                tickvals: [-5, -2.5, 0, 2.5, 5],
                 dtick: 2.5
             },
             yaxis: { 
