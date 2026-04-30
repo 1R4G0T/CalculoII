@@ -102,13 +102,15 @@ window.onload = function() {
         zValues.push(row);
     }
 
-    const data3D = [{
+const data3D = [{
         x: xValues,
         y: yValues,
         z: zValues,
         type: 'surface',
         colorscale: 'Hot',
-        showscale: true,
+        showscale: true,:
+        cmin: 40,  // Valor mínimo da escala de cores
+        cmax: 190, // Valor máximo (o pico real do seu cálculo)
         contours: {
             z: { show: true, project: { z: true }, usecolormap: true }
         }
