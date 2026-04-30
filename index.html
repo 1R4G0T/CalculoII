@@ -1,41 +1,87 @@
-<aside class="coluna-memorial">
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise Térmica - Engenharia e Matemática</title>
+    <!-- CSS Externo -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Scripts de Gráficos e Fórmulas -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+    <header class="main-header">
+        <h1>Análise Térmica Industrial</h1>
+        <p>Estudo de Integral Dupla sobre Chapas de Alumínio</p>
+    </header>
+
+    <main class="grid-principal">
+        
+        <!-- COLUNA VISUAL: GRÁFICOS -->
+        <section class="coluna-visual">
+            <div class="card-visual">
+                <h3>1. Distribuição de Temperatura T(x,y) [3D]</h3>
+                <div id="plot3d" style="height: 400px;"></div>
+            </div>
+
+            <div class="card-visual">
+                <h3>2. Domínio da Chapa D [2D]</h3>
+                <!-- Onde os eixos X, Y e o dA serão desenhados -->
+                <canvas id="meuGrafico2d"></canvas>
+                <p class="legenda">Representação do elemento diferencial \( dA = dx \cdot dy \).</p>
+            </div>
+
+            <div class="card-visual">
+                <h3>3. Corte Transversal (Perfil em y=0)</h3>
+                <canvas id="graficoCorte"></canvas>
+                <p class="legenda">Visualização da curva gaussiana de dissipação de calor.</p>
+            </div>
+        </section>
+
+        <!-- COLUNA MEMORIAL: CÁLCULOS E ANÁLISE -->
+        <aside class="coluna-memorial">
             
+            <!-- Card de Resultado Final Sempre Visível -->
             <div class="card-resultado">
                 <h3>Resultado Final (Energia Total)</h3>
                 <div class="valor-destaque">Q ≈ 4.564,48 cal</div>
             </div>
 
+            <!-- Botão para disparar o Memorial -->
             <button class="btn-aba" id="btn-toggle">
                 ▶ Mostrar Desenvolvimento Algébrico
             </button>
             
+            <!-- Conteúdo Oculto do Cálculo -->
             <div id="conteudo-calculo" class="hidden aba-conteudo">
                 <div class="math-box">
                     <h4 style="color: var(--azul-primario); margin-top: 0;">Memorial de Cálculo Detalhado</h4>
                     
-                    <p>Para calcular a energia térmica total $Q$, integramos a função de temperatura $T(x,y)$ sobre a região retangular $D = [-5, 5] \times [-4, 4]$, multiplicada pela constante térmica do alumínio ($\rho \cdot c = 0,594$).</p>
+                    <p>Para calcular a energia térmica total \( Q \), integramos a função de temperatura \( T(x,y) \) sobre a região \( D = [-5, 5] \times [-4, 4] \), multiplicada pela constante térmica do alumínio (\(\rho \cdot c = 0,594\)).</p>
 
                     <strong>1. Definição da Integral:</strong>
                     \[ Q = 0,594 \int_{-5}^{5} \int_{-4}^{4} \left( 150e^{-0,1(x^2+y^2)} + 40 \right) \, dy \, dx \]
 
-                    <strong>2. Separação de Termos (Linearidade):</strong>
-                    <p>Dividimos a integral entre o calor da base constante ($Q_{base}$) e o calor do pico térmico ($Q_{pico}$):</p>
+                    <strong>2. Linearidade e Separação:</strong>
+                    <p>Dividimos a integral em calor da base constante (\( Q_{base} \)) e do pico térmico (\( Q_{pico} \)):</p>
                     \[ Q = 0,594 \left[ \iint_D 40 \, dA + 150 \iint_D e^{-0,1x^2} \cdot e^{-0,1y^2} \, dA \right] \]
 
-                    <strong>3. Cálculo da Base Constante:</strong>
-                    <p>Como a base é constante, o volume é: $V = \text{Área} \times \text{Altura}$:</p>
+                    <strong>3. Cálculo da Base (Volume do Paralelepípedo):</strong>
                     \[ Q_{base} = 0,594 \times (10 \times 8) \times 40 = 1.900,80 \text{ cal} \]
 
-                    <strong>4. Cálculo do Pico (Teorema de Fubini):</strong>
-                    <p>Pela propriedade de exponenciais, separamos as variáveis:</p>
+                    <strong>4. Teorema de Fubini (Pico Gaussiano):</strong>
                     \[ Q_{pico} = 89,1 \left( \int_{-5}^{5} e^{-0,1x^2} dx \right) \times \left( \int_{-4}^{4} e^{-0,1y^2} dy \right) \]
-                    <p>Utilizando aproximações numéricas para as integrais gaussianas:</p>
-                    \[ Q_{pico} \approx 89,1 \times (4,312) \times (4,032) \approx 2.663,68 \text{ cal} \]
+                    <p>Utilizando integrais numéricas aproximadas:</p>
+                    \[ Q_{pico} \approx 89,1 \times 4,312 \times 4,032 \approx 2.663,68 \text{ cal} \]
 
-                    <div style="text-align: center; margin-top: 20px; padding: 15px; background: #1b5e20; color: white; border-radius: 8px; box-shadow: var(--shadow-forte);">
-                        <strong style="font-size: 1.2rem;">Soma Total: \( Q_{total} \approx 4.564,48 \text{ cal} \)</strong>
+                    <div style="text-align: center; margin-top: 20px; padding: 15px; background: #1b5e20; color: white; border-radius: 8px;">
+                        <strong style="font-size: 1.2rem;">Soma Total: \( Q \approx 4.564,48 \text{ cal} \)</strong>
                     </div>
 
+                    <!-- Botão Interno para Análise Física -->
                     <button class="btn-aba" id="btn-analise" style="background-color: #27ae60; margin-top: 20px;">
                         ▶ Mostrar Análise Física
                     </button>
@@ -43,13 +89,20 @@
                     <div id="conteudo-analise" class="hidden">
                         <div class="math-box" style="border-left: 5px solid #27ae60; margin-top: 10px;">
                             <strong>Interpretação Técnica:</strong>
-                            <ul>
-                                <li><strong>Segurança:</strong> Pico de 190°C. O alumínio funde a 660°C, portanto a estrutura está estável.</li>
-                                <li><strong>Material:</strong> O coeficiente 0,594 é específico para ligas de alumínio comuns em dissipadores.</li>
-                                <li><strong>Aplicação:</strong> Essencial para dimensionar sistemas de resfriamento em automação.</li>
+                            <ul style="margin-top: 10px;">
+                                <li><strong>Segurança:</strong> Pico de 190°C. O alumínio funde a 660°C, garantindo integridade estrutural.</li>
+                                <li><strong>Material:</strong> O valor \( 0,594 \) reflete a densidade e o calor específico da liga industrial.</li>
+                                <li><strong>Engenharia:</strong> Permite prever o tempo de resfriamento para manuseio seguro.</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </aside>
+
+    </main>
+
+    <!-- Script Interno/Externo -->
+    <script src="script.js"></script>
+</body>
+</html>
