@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Análise Térmica Compacta</title>
+    <title>Análise Térmica Industrial</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -11,84 +11,77 @@
 <body>
 
     <header class="main-header">
-        <h1>Análise Térmica Industrial</h1>
-        <p>Estudo de Calor em Chapas de Alumínio</p>
+        <h1>Análise Térmica</h1>
+        <p>Integral Dupla em Chapas de Alumínio</p>
     </header>
 
     <main class="grid-compacto">
         
-        <!-- COLUNA VISUAL -->
+        <!-- COLUNA VISUAL (Gráficos) -->
         <section class="coluna-visual">
             <div class="card-visual">
-                <h3>Distribuição de Temperatura [3D]</h3>
-                <div id="plot3d" style="height: 350px;"></div>
+                <h3>Distribuição Térmica [3D]</h3>
+                <div id="plot3d" style="height: 300px;"></div>
             </div>
 
             <div class="card-visual">
-                <h3>Perfil de Temperatura no Corte (y = 0)</h3>
+                <h3>Perfil de Dissipação (Eixo x, y=0)</h3>
                 <canvas id="graficoCorte"></canvas>
                 <div class="detalhes-corte">
-                    <span><strong>Pico:</strong> 190°C em x=0</span>
-                    <span><strong>Base:</strong> 40°C em |x| > 4</span>
+                    <span><strong>Máx:</strong> 190°C</span>
+                    <span><strong>Mín:</strong> 40°C</span>
+                    <span><strong>Região:</strong> x ∈ [-5, 5]</span>
                 </div>
             </div>
         </section>
 
-        <!-- COLUNA LATERAL -->
+        <!-- COLUNA LATERAL (Memorial e Análise) -->
         <aside class="coluna-memorial">
             <div class="card-resultado-mini">
                 <h4>Energia Total (Q)</h4>
                 <div class="valor-mini">4.564,48 cal</div>
             </div>
+
+            <button class="btn-toggle-mini" id="btn-toggle">▶ Ver Cálculo Passo a Passo</button>
             
-            <!-- Conteúdo Oculto do Cálculo -->
-            <div id="conteudo-calculo" class="hidden aba-conteudo">
-                <div class="math-box">
-                    <h4 style="color: var(--azul-primario); margin-top: 0;">Memorial de Cálculo Detalhado</h4>
-                    
-                    <p>Para calcular a energia térmica total \( Q \), integramos a função de temperatura \( T(x,y) \) sobre a região \( D = [-5, 5] \times [-4, 4] \), multiplicada pela constante térmica do alumínio (\(\rho \cdot c = 0,594\)).</p>
+            <div id="conteudo-calculo" class="hidden">
+                <div class="math-box-memorial">
+                    <p>Integração de $T(x,y)$ em $D = [-5,5] \times [-4,4]$.</p>
 
-                    <strong>1. Definição da Integral:</strong>
-                    \[ Q = 0,594 \int_{-5}^{5} \int_{-4}^{4} \left( 150e^{-0,1(x^2+y^2)} + 40 \right) \, dy \, dx \]
+                    <strong>1. A Integral:</strong>
+                    \[ Q = 0,594 \iint_D (150e^{-0,1(x^2+y^2)} + 40) dA \]
 
-                    <strong>2. Linearidade e Separação:</strong>
-                    <p>Dividimos a integral em calor da base constante (\( Q_{base} \)) e do pico térmico (\( Q_{pico} \)):</p>
-                    \[ Q = 0,594 \left[ \iint_D 40 \, dA + 150 \iint_D e^{-0,1x^2} \cdot e^{-0,1y^2} \, dA \right] \]
+                    <strong>2. Separação:</strong>
+                    \[ Q = Q_{base} + Q_{pico} \]
 
-                    <strong>3. Cálculo da Base (Volume do Paralelepípedo):</strong>
-                    \[ Q_{base} = 0,594 \times (10 \times 8) \times 40 = 1.900,80 \text{ cal} \]
+                    <strong>3. Base Constante:</strong>
+                    \[ Q_b = 0,594 \times 80 \times 40 = 1.900,80 \text{ cal} \]
 
-                    <strong>4. Teorema de Fubini (Pico Gaussiano):</strong>
-                    \[ Q_{pico} = 89,1 \left( \int_{-5}^{5} e^{-0,1x^2} dx \right) \times \left( \int_{-4}^{4} e^{-0,1y^2} dy \right) \]
-                    <p>Utilizando integrais numéricas aproximadas:</p>
-                    \[ Q_{pico} \approx 89,1 \times 4,312 \times 4,032 \approx 2.663,68 \text{ cal} \]
+                    <strong>4. Teorema de Fubini:</strong>
+                    \[ Q_p \approx 89,1 \times 4,312 \times 4,032 \approx 2.663,68 \]
 
-                    <div style="text-align: center; margin-top: 20px; padding: 15px; background: #1b5e20; color: white; border-radius: 8px;">
-                        <strong style="font-size: 1.2rem;">Soma Total: \( Q \approx 4.564,48 \text{ cal} \)</strong>
+                    <div class="soma-final">
+                        <strong>Total: $Q \approx 4.564,48 \text{ cal}$</strong>
                     </div>
 
-                    <!-- Botão Interno para Análise Física -->
-                    <button class="btn-aba" id="btn-analise" style="background-color: #27ae60; margin-top: 20px;">
-                        ▶ Mostrar Análise Física
-                    </button>
-
+                    <!-- SEÇÃO DE ANÁLISE REINTEGRADA -->
+                    <button class="btn-toggle-mini" id="btn-analise" style="background:#27ae60; margin-top:15px;">▶ Ver Análise Técnica</button>
+                    
                     <div id="conteudo-analise" class="hidden">
-                        <div class="math-box" style="border-left: 5px solid #27ae60; margin-top: 10px;">
-                            <strong>Interpretação Técnica:</strong>
-                            <ul style="margin-top: 10px;">
-                                <li><strong>Segurança:</strong> Pico de 190°C. O alumínio funde a 660°C, garantindo integridade estrutural.</li>
-                                <li><strong>Material:</strong> O valor \( 0,594 \) reflete a densidade e o calor específico da liga industrial.</li>
-                                <li><strong>Engenharia:</strong> Permite prever o tempo de resfriamento para manuseio seguro.</li>
+                        <div class="math-box-mini" style="border-left: 4px solid #27ae60; background: #f1f8e9;">
+                            <strong>Interpretação Física:</strong>
+                            <ul style="padding-left: 15px; font-size: 0.8rem; margin-top: 5px;">
+                                <li><strong>Segurança:</strong> Pico de 190°C. O alumínio funde a 660°C, portanto a estrutura está estável.</li>
+                                <li><strong>Material:</strong> O coeficiente 0,594 reflete a densidade e o calor específico da liga.</li>
+                                <li><strong>Engenharia:</strong> O cálculo de energia (calorias) é vital para dimensionar sistemas de resfriamento.</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </aside>
-
     </main>
 
-    <!-- Script Interno/Externo -->
     <script src="script.js"></script>
 </body>
 </html>
