@@ -114,14 +114,27 @@ window.onload = function() {
         }
     }];
 
-    const layout3D = {
+const layout3D = {
         title: { text: 'Distribuição de Temperatura T(x,y)', font: { size: 14 } },
         autosize: true,
         margin: { l: 0, r: 0, b: 0, t: 30 },
         scene: {
-            xaxis: { title: 'X (cm)', range: [-5, 5] },
-            yaxis: { title: 'Y (cm)', range: [-4, 4] },
-            zaxis: { title: 'T (°C)', range: [0, 200] },
+            xaxis: { 
+                title: 'X (cm)', 
+                range: [-5.5, 5.5],
+                tickvals: [-5, -2.5, 0, 2.5, 5], // Força o aparecimento do -5 e 5
+                dtick: 2.5
+            },
+            yaxis: { 
+                title: 'Y (cm)', 
+                range: [-4.5, 4.5],
+                tickvals: [-4, -2, 0, 2, 4],
+                dtick: 2
+            },
+            zaxis: { 
+                title: 'T (°C)', 
+                range: [0, 200] 
+            },
             camera: {
                 eye: { x: 1.5, y: 1.5, z: 1.2 }
             }
