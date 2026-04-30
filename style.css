@@ -1,137 +1,61 @@
 :root {
-    --azul-primario: #0d47a1; /* Azul mais profundo e nítido */
-    --azul-claro: #e3f2fd;
-    --texto-escuro: #121212;
-    --fundo-pagina: #dee2e6; /* Cinza mais fechado para destacar os cards */
-    --card-bg: #ffffff;
-    --shadow-forte: 0 10px 30px rgba(0, 0, 0, 0.2);
-    --borda: #adb5bd;
+    --azul: #0d47a1;
+    --fundo: #cfd8dc;
 }
 
 body {
-    font-family: 'Inter', -apple-system, sans-serif;
-    background-color: var(--fundo-pagina);
+    background-color: var(--fundo);
+    font-family: sans-serif;
     margin: 0;
-    padding: 20px;
-    color: var(--texto-escuro);
+    padding: 10px;
 }
 
-.main-header {
-    text-align: center;
-    margin-bottom: 40px;
-    border-bottom: 2px solid var(--borda);
-    padding-bottom: 20px;
-}
-
-.main-header h1 {
-    color: var(--azul-primario);
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-/* GRID PRINCIPAL */
-.grid-principal {
+/* Deixa o dashboard centralizado e menos largo */
+.grid-compacto {
     display: grid;
-    grid-template-columns: 1.3fr 0.7fr;
-    gap: 30px;
-    max-width: 1400px;
-    margin: 0 auto;
-    align-items: start;
+    grid-template-columns: 450px 250px; /* Larguras fixas para ser compacto */
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
 }
 
-/* CARDS E CAIXAS */
-.card-visual, .aba-conteudo, .math-box, .card-resultado {
-    background: var(--card-bg);
-    border-radius: 12px;
-    padding: 25px;
-    box-shadow: var(--shadow-forte);
-    border: 1px solid var(--borda);
-    margin-bottom: 30px;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Linha de destaque no topo dos cards */
-.card-visual::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 6px;
-    background: var(--azul-primario);
-}
-
-h3 {
-    color: var(--azul-primario);
-    font-size: 1.2rem;
-    margin-top: 0;
-    border-bottom: 2px solid var(--azul-claro);
-    padding-bottom: 10px;
-}
-
-/* CANVAS E GRÁFICOS */
-canvas {
-    background: #ffffff;
-    border: 2px solid #333; /* Borda bem escura para os gráficos aparecerem */
+.card-visual, .math-box-mini, .card-resultado-mini {
+    background: white;
     border-radius: 8px;
-    width: 100% !important;
-    height: auto !important;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border: 1px solid #b0bec5;
 }
 
-/* RESULTADO EM DESTAQUE */
-.card-resultado {
-    background: #1b5e20; /* Verde escuro para contraste máximo */
-    color: white;
-    border-top: none;
-    text-align: center;
-}
+h3 { font-size: 1rem; color: var(--azul); margin-bottom: 10px; }
 
-.card-resultado h3 {
-    color: #a5d6a7;
-    border-bottom-color: rgba(255,255,255,0.2);
-}
-
-.valor-destaque {
-    font-size: 3rem;
-    font-weight: 900;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-}
-
-/* BOTÕES */
-.btn-aba {
-    width: 100%;
-    padding: 18px;
-    background: #212529;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn-aba:hover {
-    background: var(--azul-primario);
-    transform: translateY(-2px);
-}
-
-/* FORMULAS MATHJAX */
-.math-box {
-    background: #f8f9fa;
-    border-left: 8px solid var(--azul-primario);
-    color: #000;
-    font-size: 1.1rem;
-}
-
-.hidden { display: none !important; }
-
-/* LEGENDAS */
-.legenda {
-    background: #343a40;
-    color: #fff;
-    padding: 8px 15px;
-    border-radius: 50px;
+/* Estilização do Corte em Y */
+.detalhes-corte {
+    display: flex;
+    justify-content: space-between;
     font-size: 0.8rem;
-    margin-top: 15px;
-    display: inline-block;
+    margin-top: 8px;
+    padding: 5px;
+    background: #f1f8e9;
+    border-radius: 4px;
 }
+
+.valor-mini {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1b5e20;
+}
+
+.btn-aba-mini {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    border: none;
+    background: #263238;
+    color: white;
+    font-size: 0.8rem;
+}
+
+.hidden { display: none; }
