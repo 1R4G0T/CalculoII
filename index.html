@@ -35,51 +35,50 @@
             </div>
         </section>
 
-        <!-- COLUNA LATERAL (Memorial e Análise) -->
-        <aside class="coluna-memorial">
-            <div class="card-resultado-mini">
-                <h4>Energia Total (Q)</h4>
-                <div class="valor-mini">4.564,48 cal</div>
+    <!-- COLUNA LATERAL (Memorial e Análise) -->
+<aside class="coluna-memorial">
+    <div class="card-resultado-mini">
+        <h4>Energia Total (Q)</h4>
+        <div class="valor-mini">4.564,48 cal</div>
+    </div>
+
+    <button class="btn-toggle-mini" id="btn-toggle">▶ Ver Cálculo Passo a Passo</button>
+    
+    <div id="conteudo-calculo" class="hidden">
+        <div class="math-box-memorial">
+            <p>Integração de \( T(x,y) \) em \( D = [-5,5] \times [-4,4] \).</p>
+
+            <strong>1. A Integral:</strong>
+            \[ Q = 0,594 \iint_D (150e^{-0,1(x^2+y^2)} + 40) dA \]
+
+            <strong>2. Separação:</strong>
+            \[ Q = Q_{base} + Q_{pico} \]
+
+            <strong>3. Base Constante:</strong>
+            \[ Q_b = 0,594 \times 80 \times 40 = 1.900,80 \text{ cal} \]
+
+            <strong>4. Teorema de Fubini:</strong>
+            \[ Q_p \approx 89,1 \times 4,312 \times 4,032 \approx 2.663,68 \]
+
+            <div class="soma-final">
+                <strong>Total: \( Q \approx 4.564,48 \text{ cal} \)</strong>
             </div>
 
-            <button class="btn-toggle-mini" id="btn-toggle">▶ Ver Cálculo Passo a Passo</button>
+            <button class="btn-toggle-mini" id="btn-analise" style="background:#27ae60; margin-top:15px;">▶ Ver Análise Técnica</button>
             
-            <div id="conteudo-calculo" class="hidden">
-                <div class="math-box-memorial">
-                    <p>Integração de $T(x,y)$ em $D = [-5,5] \times [-4,4]$.</p>
-
-                    <strong>1. A Integral:</strong>
-                    \[ Q = 0,594 \iint_D (150e^{-0,1(x^2+y^2)} + 40) dA \]
-
-                    <strong>2. Separação:</strong>
-                    \[ Q = Q_{base} + Q_{pico} \]
-
-                    <strong>3. Base Constante:</strong>
-                    \[ Q_b = 0,594 \times 80 \times 40 = 1.900,80 \text{ cal} \]
-
-                    <strong>4. Teorema de Fubini:</strong>
-                    \[ Q_p \approx 89,1 \times 4,312 \times 4,032 \approx 2.663,68 \]
-
-                    <div class="soma-final">
-                        <strong>Total: $Q \approx 4.564,48 \text{ cal}$</strong>
-                    </div>
-
-                    <!-- SEÇÃO DE ANÁLISE REINTEGRADA -->
-                    <button class="btn-toggle-mini" id="btn-analise" style="background:#27ae60; margin-top:15px;">▶ Ver Análise Técnica</button>
-                    
-                    <div id="conteudo-analise" class="hidden">
-                        <div class="math-box-mini" style="border-left: 4px solid #27ae60; background: #f1f8e9;">
-                            <strong>Interpretação Física:</strong>
-                            <ul style="padding-left: 15px; font-size: 0.8rem; margin-top: 5px;">
-                                <li><strong>Segurança:</strong> Pico de 190°C. O alumínio funde a 660°C, portanto a estrutura está estável.</li>
-                                <li><strong>Material:</strong> O coeficiente 0,594 reflete a densidade e o calor específico da liga.</li>
-                                <li><strong>Engenharia:</strong> O cálculo de energia (calorias) é vital para dimensionar sistemas de resfriamento.</li>
-                            </ul>
-                        </div>
-                    </div>
+            <div id="conteudo-analise" class="hidden">
+                <div class="math-box-mini" style="border-left: 4px solid #27ae60; background: #f1f8e9;">
+                    <strong>Interpretação Física:</strong>
+                    <ul style="padding-left: 15px; font-size: 0.8rem; margin-top: 5px;">
+                        <li><strong>Segurança:</strong> Pico de 190°C. Estável para Alumínio (Fusão: 660°C).</li>
+                        <li><strong>Material:</strong> Coeficiente 0,594 (Ligas industriais).</li>
+                        <li><strong>Aplicação:</strong> Dimensionamento de dissipadores.</li>
+                    </ul>
                 </div>
             </div>
-        </aside>
+        </div>
+    </div>
+</aside>
     </main>
 
     <script src="script.js"></script>
