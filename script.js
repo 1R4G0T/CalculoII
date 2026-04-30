@@ -7,6 +7,7 @@ window.onload = function() {
             b.onclick = () => {
                 c.classList.toggle('hidden');
                 const isHidden = c.classList.contains('hidden');
+                // Atualiza o ícone (substituindo os dois primeiros caracteres)
                 b.innerHTML = (isHidden ? "▶ " : "▼ ") + b.innerText.substring(2);
                 if (!isHidden && window.MathJax) {
                     MathJax.typesetPromise();
@@ -25,36 +26,30 @@ window.onload = function() {
         canvas.width = 440; 
         canvas.height = 220;
         
-        const cx = 220; 
-        const cy = 180; 
+        const cx = 220; // Centro
+        const cy = 180; // Base
         const escalaX = 35; 
         const escalaT = 0.7; 
 
+        // Eixos
         ctx.strokeStyle = "#000";
         ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.moveTo(20, cy); ctx.lineTo(420, cy); 
-        ctx.moveTo(cx, 20); ctx.lineTo(cx, cy + 20); 
+        ctx.moveTo(20, cy); ctx.lineTo(420, cy);
+        ctx.moveTo(cx, 20); ctx.lineTo(cx, cy + 20);
         ctx.stroke();
 
+        // Pilar dA
         const xAmostra = 1.5; 
-        const tempNoPonto = 150 * Math.exp(-0.1 * Math.pow(xAmostra, 2)) + 40; 
-        
-        const larguraPilar = 25;
-        const alturaPilarPx = tempNoPonto * escalaT;
-        const pxPilar = cx + (xAmostra * escalaX);
-        const pyPilar = cy - alturaPilarPx;
+        const tempNoPonto = 150 * Math.exp(-0.1 * (xAmostra * xAmostra)) + 40; 
+        const pyPilar = cy - (tempNoPonto * escalaT);
 
-        ctx.fillStyle = "rgba(255, 0, 0, 0.4)"; 
+        ctx.fillStyle = "rgba(255, 0, 0, 0.4)";
         ctx.strokeStyle = "red";
-        ctx.lineWidth = 1;
-        ctx.fillRect(pxPilar, pyPilar, larguraPilar, alturaPilarPx);
-        ctx.strokeRect(pxPilar, pyPilar, larguraPilar, alturaPilarPx);
+        ctx.fillRect(cx + (xAmostra * escalaX), pyPilar, 25, (tempNoPonto * escalaT));
+        ctx.strokeRect(cx + (xAmostra * escalaX), pyPilar, 25, (tempNoPonto * escalaT));
 
-        ctx.fillStyle = "red";
-        ctx.font = "bold 10px Arial";
-        ctx.fillText("dA = dx.dy", pxPilar - 5, pyPilar - 8);
-
+        // Curva
         ctx.strokeStyle = "#d32f2f";
         ctx.lineWidth = 3;
         ctx.beginPath();
@@ -65,13 +60,9 @@ window.onload = function() {
             if(x === -5.5) ctx.moveTo(px, py); else ctx.lineTo(px, py);
         }
         ctx.stroke();
-
-        ctx.fillStyle = "#000"; ctx.font = "12px Arial";
-        ctx.fillText("T (°C)", cx + 10, 30);
-        ctx.fillText("x (cm)", 405, cy + 15);
     }
 
-    // 3. GRÁFICO 3D (PLOTLY) - CORREÇÃO DE SINTAXE AQUI
+    // 3. GRÁFICO 3D (PLOTLY)
     const xValues = [];
     const yValues = [];
     const zValues = [];
@@ -94,7 +85,7 @@ window.onload = function() {
         z: zValues,
         type: 'surface',
         colorscale: 'Hot',
-        showscale: true, // Removida a vírgula/dois pontos extras
+        showscale: true,
         cmin: 40,
         cmax: 190,
         contours: {
@@ -103,14 +94,11 @@ window.onload = function() {
     }];
 
     const layout3D = {
-        title: { text: 'Distribuição de Temperatura T(x,y)', font: { size: 14 } },
-        autosize: true,
-        margin: { l: 0, r: 0, b: 0, t: 30 },
+        margin: { l: 0, r: 0, b: 0, t: 0 },
         scene: {
-            xaxis: { title: 'X (cm)', range: [-5.5, 5.5], tickvals: [-5, -2.5, 0, 2.5, 5] },
-            yaxis: { title: 'Y (cm)', range: [-4.5, 4.5], tickvals: [-4, -2, 0, 2, 4] },
-            zaxis: { title: 'T (°C)', range: [0, 200] },
-            camera: { eye: { x: 1.5, y: 1.5, z: 1.2 } }
+            xaxis: { title: 'X (cm)', range: [-5.5, 5.5] },
+            yaxis: { title: 'Y (cm)', range: [-4.5, 4.5] },
+            zaxis: { title: 'T (°C)', range: [0, 200] }
         }
     };
 
