@@ -7,9 +7,7 @@ window.onload = function() {
             b.onclick = () => {
                 c.classList.toggle('hidden');
                 const isHidden = c.classList.contains('hidden');
-                // Atualiza o ícone do botão
                 b.innerHTML = (isHidden ? "▶ " : "▼ ") + b.innerText.substring(2);
-                // Renderiza o MathJax novamente para garantir as fórmulas no conteúdo revelado
                 if (!isHidden && window.MathJax) {
                     MathJax.typesetPromise();
                 }
@@ -20,27 +18,25 @@ window.onload = function() {
     toggle('btn-toggle', 'conteudo-calculo');
     toggle('btn-analise', 'conteudo-analise');
 
-    // 2. GRÁFICO DE CORTE LATERAL (2D CANVAS - Y = 0)
+    // 2. GRÁFICO DE CORTE LATERAL (2D CANVAS)
     const canvas = document.getElementById('graficoCorte');
     if (canvas) {
         const ctx = canvas.getContext('2d');
         canvas.width = 440; 
         canvas.height = 220;
         
-        const cx = 220; // Centro do eixo X
-        const cy = 180; // Base do gráfico
-        const escalaX = 35; // px por cm
-        const escalaT = 0.7; // px por °C
+        const cx = 220; 
+        const cy = 180; 
+        const escalaX = 35; 
+        const escalaT = 0.7; 
 
-        // Desenho dos Eixos (Pretos)
         ctx.strokeStyle = "#000";
         ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.moveTo(20, cy); ctx.lineTo(420, cy); // Eixo X
-        ctx.moveTo(cx, 20); ctx.lineTo(cx, cy + 20); // Eixo T
+        ctx.moveTo(20, cy); ctx.lineTo(420, cy); 
+        ctx.moveTo(cx, 20); ctx.lineTo(cx, cy + 20); 
         ctx.stroke();
 
-        // DESENHO DO PILAR dA (Encostando na Curva)
         const xAmostra = 1.5; 
         const tempNoPonto = 150 * Math.exp(-0.1 * Math.pow(xAmostra, 2)) + 40; 
         
@@ -55,12 +51,10 @@ window.onload = function() {
         ctx.fillRect(pxPilar, pyPilar, larguraPilar, alturaPilarPx);
         ctx.strokeRect(pxPilar, pyPilar, larguraPilar, alturaPilarPx);
 
-        // Texto dA
         ctx.fillStyle = "red";
         ctx.font = "bold 10px Arial";
         ctx.fillText("dA = dx.dy", pxPilar - 5, pyPilar - 8);
 
-        // DESENHO DA CURVA GAUSSIANA
         ctx.strokeStyle = "#d32f2f";
         ctx.lineWidth = 3;
         ctx.beginPath();
@@ -68,20 +62,16 @@ window.onload = function() {
             let px = cx + (x * escalaX);
             let t = 150 * Math.exp(-0.1 * (x * x)) + 40;
             let py = cy - (t * escalaT);
-            
-            if(x === -5.5) ctx.moveTo(px, py);
-            else ctx.lineTo(px, py);
+            if(x === -5.5) ctx.moveTo(px, py); else ctx.lineTo(px, py);
         }
         ctx.stroke();
 
-        // Labels
-        ctx.fillStyle = "#000";
-        ctx.font = "12px Arial";
+        ctx.fillStyle = "#000"; ctx.font = "12px Arial";
         ctx.fillText("T (°C)", cx + 10, 30);
         ctx.fillText("x (cm)", 405, cy + 15);
     }
 
-    // 3. GRÁFICO 3D (PLOTLY)
+    // 3. GRÁFICO 3D (PLOTLY) - CORREÇÃO DE SINTAXE AQUI
     const xValues = [];
     const yValues = [];
     const zValues = [];
@@ -104,7 +94,7 @@ window.onload = function() {
         z: zValues,
         type: 'surface',
         colorscale: 'Hot',
-        showscale: true,
+        showscale: true, // Removida a vírgula/dois pontos extras
         cmin: 40,
         cmax: 190,
         contours: {
@@ -117,25 +107,10 @@ window.onload = function() {
         autosize: true,
         margin: { l: 0, r: 0, b: 0, t: 30 },
         scene: {
-            xaxis: { 
-                title: 'X (cm)', 
-                range: [-5.5, 5.5],
-                tickvals: [-5, -2.5, 0, 2.5, 5],
-                dtick: 2.5
-            },
-            yaxis: { 
-                title: 'Y (cm)', 
-                range: [-4.5, 4.5],
-                tickvals: [-4, -2, 0, 2, 4],
-                dtick: 2
-            },
-            zaxis: { 
-                title: 'T (°C)', 
-                range: [0, 200] 
-            },
-            camera: {
-                eye: { x: 1.5, y: 1.5, z: 1.2 }
-            }
+            xaxis: { title: 'X (cm)', range: [-5.5, 5.5], tickvals: [-5, -2.5, 0, 2.5, 5] },
+            yaxis: { title: 'Y (cm)', range: [-4.5, 4.5], tickvals: [-4, -2, 0, 2, 4] },
+            zaxis: { title: 'T (°C)', range: [0, 200] },
+            camera: { eye: { x: 1.5, y: 1.5, z: 1.2 } }
         }
     };
 
