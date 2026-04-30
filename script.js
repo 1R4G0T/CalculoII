@@ -1,82 +1,57 @@
 window.onload = function() {
-    // FUNÇÃO PARA OS BOTÕES FUNCIONAREM
-    function setupToggle(btnId, contentId) {
-        const btn = document.getElementById(btnId);
-        const content = document.getElementById(contentId);
-        if (btn && content) {
-            btn.onclick = function() {
-                content.classList.toggle('hidden');
-                const isHidden = content.classList.contains('hidden');
-                this.innerHTML = (isHidden ? "▶ " : "▼ ") + this.innerText.substring(2);
-                
-                // Recarrega fórmulas matemáticas se houver
-                if (!isHidden && window.MathJax) {
-                    MathJax.typesetPromise();
-                }
-            };
-        }
-    }
+    // Toggles dos botões
+    const toggle = (idBtn, idCont) => {
+        document.getElementById(idBtn).onclick = function() {
+            const c = document.getElementById(idCont);
+            c.classList.toggle('hidden');
+            this.innerText = (c.classList.contains('hidden') ? "▶ " : "▼ ") + this.innerText.substring(2);
+        };
+    };
+    toggle('btn-toggle', 'conteudo-calculo');
+    toggle('btn-analise', 'conteudo-analise');
 
-    setupToggle('btn-toggle', 'conteudo-calculo');
-    setupToggle('btn-analise', 'conteudo-analise');
+    // Gráfico de Corte em Y=0
+    const cv = document.getElementById('graficoCorte');
+    const ctx = cv.getContext('2d');
+    cv.width = 440; cv.height = 180;
 
-    // DESENHO DOS GRÁFICOS 2D
-    function renderCanvas() {
-        const cv = document.getElementById('meuGrafico2d');
-        if (!cv) return;
+    function drawCorte() {
+        const ox = 220, oy = 150; // Origem
+        ctx.clearRect(0,0,440,180);
         
-        const ctx = cv.getContext('2d');
-        cv.width = cv.parentElement.clientWidth;
-        cv.height = 300;
-        
-        const cx = cv.width / 2;
-        const cy = cv.height / 2;
-        const escala = 25;
+        // Eixos Cartesianos
+        ctx.strokeStyle = "#333";
+        ctx.beginPath();
+        ctx.moveTo(20, oy); ctx.lineTo(420, oy); // Eixo X
+        ctx.moveTo(ox, 10); ctx.lineTo(ox, 170); // Eixo T
+        ctx.stroke();
 
-        ctx.clearRect(0, 0, cv.width, cv.height);
-
-        // 1. DESENHAR EIXOS (PRETO)
-        ctx.strokeStyle = "#000000";
+        // Curva de Temperatura (Gaussiana)
+        ctx.strokeStyle = "#d32f2f";
         ctx.lineWidth = 2;
-        
-        ctx.beginPath(); // Eixo X
-        ctx.moveTo(0, cy); ctx.lineTo(cv.width, cy); ctx.stroke();
-        
-        ctx.beginPath(); // Eixo Y
-        ctx.moveTo(cx, 0); ctx.lineTo(cx, cv.height); ctx.stroke();
+        ctx.beginPath();
+        for(let x = -5.5; x <= 5.5; x += 0.1) {
+            let px = ox + (x * 35);
+            let temp = 150 * Math.exp(-0.1 * (x*x)) + 40;
+            let py = oy - (temp * 0.6);
+            if(x === -5.5) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
 
-        // 2. DESENHAR O PILAR dA (VERMELHO)
-        ctx.fillStyle = "rgba(255, 0, 0, 0.6)";
-        ctx.strokeStyle = "#ff0000";
-        const dx = 20, dy = 20;
-        const xPos = cx + (2 * escala); 
-        const yPos = cy - (3 * escala);
-        
-        ctx.fillRect(xPos, yPos, dx, dy);
-        ctx.strokeRect(xPos, yPos, dx, dy);
-
-        // 3. TEXTOS E LEGENDAS
-        ctx.fillStyle = "#000";
-        ctx.font = "bold 14px Arial";
-        ctx.fillText("X (cm)", cv.width - 50, cy + 20);
-        ctx.fillText("Y (cm)", cx + 10, 20);
-        ctx.fillText("dA = dx.dy", xPos - 10, yPos - 10);
+        // Labels
+        ctx.fillStyle = "#000"; ctx.font = "10px Arial";
+        ctx.fillText("T(°C)", ox + 5, 20);
+        ctx.fillText("x (cm)", 400, oy + 15);
     }
+    drawCorte();
 
-    renderCanvas();
-    
-    // GRÁFICO 3D (PLOTLY)
-    const data3d = [{
-        z: Array.from({length: 30}, (_, y) => 
-           Array.from({length: 30}, (_, x) => 
-           150 * Math.exp(-0.1 * (Math.pow((x-15)/5, 2) + Math.pow((y-15)/5, 2))) + 40)
-        ),
-        type: 'surface',
-        colorscale: 'Viridis'
-    }];
-    
-    Plotly.newPlot('plot3d', data3d, {
-        margin: {l:0, r:0, b:0, t:0},
-        scene: { xaxis: {title: 'X'}, yaxis: {title: 'Y'}, zaxis: {title: 'T (°C)'} }
-    });
+    // Gráfico 3D Plotly
+    const zData = Array.from({length: 25}, (_, y) => 
+        Array.from({length: 25}, (_, x) => 
+            150 * Math.exp(-0.1 * (Math.pow((x-12)/4,2) + Math.pow((y-12)/4,2))) + 40
+        )
+    );
+    Plotly.newPlot('plot3d', [{z: zData, type: 'surface', colorscale: 'YlOrRd'}], 
+        {margin: {l:0,r:0,b:0,t:0}, scene:{camera:{eye:{x:1.2, y:1.2, z:1.1}}}}
+    );
 };
