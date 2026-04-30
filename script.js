@@ -1,104 +1,82 @@
 window.onload = function() {
-    // 1. CONFIGURAÇÃO DE INTERFACE (Botões e Abas)
-    function configurarBotao(idBotao, idConteudo) {
-        const btn = document.getElementById(idBotao);
-        const conteudo = document.getElementById(idConteudo);
-        
-        if (btn && conteudo) {
+    // FUNÇÃO PARA OS BOTÕES FUNCIONAREM
+    function setupToggle(btnId, contentId) {
+        const btn = document.getElementById(btnId);
+        const content = document.getElementById(contentId);
+        if (btn && content) {
             btn.onclick = function() {
-                const visivel = conteudo.classList.toggle('visible');
-                conteudo.classList.toggle('hidden', !visivel);
+                content.classList.toggle('hidden');
+                const isHidden = content.classList.contains('hidden');
+                this.innerHTML = (isHidden ? "▶ " : "▼ ") + this.innerText.substring(2);
                 
-                // Atualiza ícone e texto
-                const icone = visivel ? "▼" : "▶";
-                const textoOriginal = this.innerText.replace(/[▶▼]\s*/, "");
-                this.innerHTML = `<span class="icone">${icone}</span> ${textoOriginal}`;
-
-                // Se abrir a aba, ajusta o gráfico 3D e renderiza fórmulas
-                if (visivel) {
-                    Plotly.Plots.resize('plot3d');
-                    if (window.MathJax) MathJax.typesetPromise([conteudo]);
+                // Recarrega fórmulas matemáticas se houver
+                if (!isHidden && window.MathJax) {
+                    MathJax.typesetPromise();
                 }
             };
         }
     }
 
-    configurarBotao('btn-toggle', 'conteudo-calculo');
-    configurarBotao('btn-analise', 'conteudo-analise');
+    setupToggle('btn-toggle', 'conteudo-calculo');
+    setupToggle('btn-analise', 'conteudo-analise');
 
-    // 2. LÓGICA MATEMÁTICA
-    const escala = 25;
-    const getTempAt = (x, y) => 150 * Math.exp(-0.1 * (x**2 + y**2)) + 40;
-
-    // 3. RENDERIZAÇÃO DOS GRÁFICOS 2D (Canvas)
-    function renderizarCanvases() {
-      
-        // --- Gráfico de Corte: Perfil ---
-        const cvCorte = document.getElementById('graficoCorte');
-        if (cvCorte) {
-            cvCorte.width = cvCorte.parentElement.clientWidth;
-            cvCorte.height = 250;
-            const ctx = cvCorte.getContext('2d');
-            const cx = cvCorte.width / 2; const cy = cvCorte.height - 40;
-
-            ctx.clearRect(0, 0, cvCorte.width, cvCorte.height);
-            
-            ctx.strokeStyle = '#e67e22';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            for(let x = -6; x <= 6; x += 0.1) {
-                let px = cx + x * escala;
-                let py = cy - (getTempAt(x, 0) * 0.7);
-                if(x === -6) ctx.moveTo(px, py); else ctx.lineTo(px, py);
-            }
-            ctx.stroke();
-        }
-    }
-
-    // 4. GRÁFICO 3D (Plotly)
-    function renderizarPlotly() {
-        const xV = [], yV = [], zV = [];
-        for(let i=-6; i<=6; i+=0.4) xV.push(i);
-        for(let j=-5; j<=5; j+=0.4) yV.push(j);
+    // DESENHO DOS GRÁFICOS 2D
+    function renderCanvas() {
+        const cv = document.getElementById('meuGrafico2d');
+        if (!cv) return;
         
-        for(let j=0; j<yV.length; j++) {
-            let r = [];
-            for(let i=0; i<xV.length; i++) r.push(getTempAt(xV[i], yV[j]));
-            zV.push(r);
-        }
+        const ctx = cv.getContext('2d');
+        cv.width = cv.parentElement.clientWidth;
+        cv.height = 300;
+        
+        const cx = cv.width / 2;
+        const cy = cv.height / 2;
+        const escala = 25;
 
-        const data = [{
-            z: zV, x: xV, y: yV, 
-            type: 'surface', 
-            colorscale: 'Hot',
-            colorbar: { title: 'T (°C)', thickness: 15 }
-        }];
+        ctx.clearRect(0, 0, cv.width, cv.height);
 
-        const layout = {
-            margin: { l: 0, r: 0, b: 0, t: 0 },
-            scene: {
-                camera: { eye: { x: 1.5, y: 1.5, z: 1.2 } },
-                xaxis: { title: 'X' },
-                yaxis: { title: 'Y' },
-                zaxis: { title: 'T' }
-            },
-            autosize: true
-        };
+        // 1. DESENHAR EIXOS (PRETO)
+        ctx.strokeStyle = "#000000";
+        ctx.lineWidth = 2;
+        
+        ctx.beginPath(); // Eixo X
+        ctx.moveTo(0, cy); ctx.lineTo(cv.width, cy); ctx.stroke();
+        
+        ctx.beginPath(); // Eixo Y
+        ctx.moveTo(cx, 0); ctx.lineTo(cx, cv.height); ctx.stroke();
 
-        Plotly.newPlot('plot3d', data, layout, {responsive: true});
+        // 2. DESENHAR O PILAR dA (VERMELHO)
+        ctx.fillStyle = "rgba(255, 0, 0, 0.6)";
+        ctx.strokeStyle = "#ff0000";
+        const dx = 20, dy = 20;
+        const xPos = cx + (2 * escala); 
+        const yPos = cy - (3 * escala);
+        
+        ctx.fillRect(xPos, yPos, dx, dy);
+        ctx.strokeRect(xPos, yPos, dx, dy);
+
+        // 3. TEXTOS E LEGENDAS
+        ctx.fillStyle = "#000";
+        ctx.font = "bold 14px Arial";
+        ctx.fillText("X (cm)", cv.width - 50, cy + 20);
+        ctx.fillText("Y (cm)", cx + 10, 20);
+        ctx.fillText("dA = dx.dy", xPos - 10, yPos - 10);
     }
 
-    // 5. INICIALIZAÇÃO IMEDIATA
-    renderizarPlotly();
-    renderizarCanvases();
-
-    // 6. TRATAMENTO DE REDIMENSIONAMENTO (Resize)
-    let resizeTimer;
-    window.onresize = function() {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-            renderizarCanvases();
-            Plotly.Plots.resize('plot3d');
-        }, 150);
-    };
+    renderCanvas();
+    
+    // GRÁFICO 3D (PLOTLY)
+    const data3d = [{
+        z: Array.from({length: 30}, (_, y) => 
+           Array.from({length: 30}, (_, x) => 
+           150 * Math.exp(-0.1 * (Math.pow((x-15)/5, 2) + Math.pow((y-15)/5, 2))) + 40)
+        ),
+        type: 'surface',
+        colorscale: 'Viridis'
+    }];
+    
+    Plotly.newPlot('plot3d', data3d, {
+        margin: {l:0, r:0, b:0, t:0},
+        scene: { xaxis: {title: 'X'}, yaxis: {title: 'Y'}, zaxis: {title: 'T (°C)'} }
+    });
 };
