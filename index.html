@@ -3,11 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Análise Térmica - Engenharia e Matemática</title>
-    <!-- CSS Externo -->
+    <title>Análise Térmica Compacta</title>
     <link rel="stylesheet" href="style.css">
-    
-    <!-- Scripts de Gráficos e Fórmulas -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
@@ -15,45 +12,34 @@
 
     <header class="main-header">
         <h1>Análise Térmica Industrial</h1>
-        <p>Estudo de Integral Dupla sobre Chapas de Alumínio</p>
+        <p>Estudo de Calor em Chapas de Alumínio</p>
     </header>
 
-    <main class="grid-principal">
+    <main class="grid-compacto">
         
-        <!-- COLUNA VISUAL: GRÁFICOS -->
+        <!-- COLUNA VISUAL -->
         <section class="coluna-visual">
             <div class="card-visual">
-                <h3>1. Distribuição de Temperatura T(x,y) [3D]</h3>
-                <div id="plot3d" style="height: 400px;"></div>
+                <h3>Distribuição de Temperatura [3D]</h3>
+                <div id="plot3d" style="height: 350px;"></div>
             </div>
 
             <div class="card-visual">
-                <h3>2. Domínio da Chapa D [2D]</h3>
-                <!-- Onde os eixos X, Y e o dA serão desenhados -->
-                <canvas id="meuGrafico2d"></canvas>
-                <p class="legenda">Representação do elemento diferencial \( dA = dx \cdot dy \).</p>
-            </div>
-
-            <div class="card-visual">
-                <h3>3. Corte Transversal (Perfil em y=0)</h3>
+                <h3>Perfil de Temperatura no Corte (y = 0)</h3>
                 <canvas id="graficoCorte"></canvas>
-                <p class="legenda">Visualização da curva gaussiana de dissipação de calor.</p>
+                <div class="detalhes-corte">
+                    <span><strong>Pico:</strong> 190°C em x=0</span>
+                    <span><strong>Base:</strong> 40°C em |x| > 4</span>
+                </div>
             </div>
         </section>
 
-        <!-- COLUNA MEMORIAL: CÁLCULOS E ANÁLISE -->
+        <!-- COLUNA LATERAL -->
         <aside class="coluna-memorial">
-            
-            <!-- Card de Resultado Final Sempre Visível -->
-            <div class="card-resultado">
-                <h3>Resultado Final (Energia Total)</h3>
-                <div class="valor-destaque">Q ≈ 4.564,48 cal</div>
+            <div class="card-resultado-mini">
+                <h4>Energia Total (Q)</h4>
+                <div class="valor-mini">4.564,48 cal</div>
             </div>
-
-            <!-- Botão para disparar o Memorial -->
-            <button class="btn-aba" id="btn-toggle">
-                ▶ Mostrar Desenvolvimento Algébrico
-            </button>
             
             <!-- Conteúdo Oculto do Cálculo -->
             <div id="conteudo-calculo" class="hidden aba-conteudo">
