@@ -70,9 +70,26 @@
                 <div class="math-box-mini" style="border-left: 4px solid #27ae60; background: #f1f8e9;">
                     <strong>Interpretação Física:</strong>
                     <ul style="padding-left: 15px; font-size: 0.8rem; margin-top: 5px;">
-                        <li><strong>Segurança:</strong> Pico de 190°C. Estável para Alumínio (Fusão: 660°C).</li>
-                        <li><strong>Material:</strong> Coeficiente 0,594 (Ligas industriais).</li>
-                        <li><strong>Aplicação:</strong> Dimensionamento de dissipadores.</li>
+<h4>1. Significado do Valor Encontrado</h4>
+    <p>
+        O valor de <strong>4.564,48 cal</strong> representa a energia térmica total acumulada na chapa de alumínio em regime estacionário. 
+        Matematicamente, é o volume sob a superfície de temperatura $T(x,y)$ ponderado pelas propriedades físicas do material ($\rho$ e $c$).
+    </p>
+
+    <h4>2. Simulação de Cenários</h4>
+    <ul>
+        <li><strong>Geometria:</strong> Se a chapa fosse expandida além de $x \in [-5,5]$ e $y \in [-4,4]$, a energia total subiria linearmente nas bordas, pois a base mantém 40°C constantes.</li>
+        <li><strong>Materiais:</strong> A substituição do alumínio por um material com maior calor específico (como o cobre) resultaria em um $Q$ total mais elevado para a mesma distribuição de temperatura.</li>
+        <li><strong>Gradiente:</strong> Alterar o coeficiente exponencial de $-0,1$ para um valor menor tornaria a curva mais "achatada", espalhando o calor de forma mais uniforme.</li>
+    </ul>
+
+    <h4>3. Riscos e Impactos Industriais</h4>
+    <ul>
+        <li><strong>Segurança Estrutural:</strong> O pico de <strong>190°C</strong> está bem abaixo do ponto de fusão do alumínio (660°C), garantindo que não há risco de derretimento.</li>
+        <li><strong>Deformação Térmica:</strong> O alto gradiente térmico entre o centro (190°C) e as bordas (40°C) pode gerar tensões mecânicas e empenamento se a chapa não tiver espaço para dilatação.</li>
+        <li><strong>Processo de Fabricação:</strong> O valor de $Q$ é vital para calcular o tempo de resfriamento necessário entre as etapas de produção e para dimensionar o sistema de exaustão térmica da fábrica.</li>
+    </ul>
+</div>
                     </ul>
                 </div>
             </div>
