@@ -37,60 +37,52 @@
 
     <!-- COLUNA LATERAL (Memorial e Análise) -->
 <aside class="coluna-memorial">
-    <!-- Card de Resultado -->
     <div class="card-resultado-mini">
         <h4>Energia Total (Q)</h4>
         <div class="valor-mini">4.564,48 cal</div>
     </div>
 
-    <!-- Botão Memorial -->
     <button class="btn-toggle-mini" id="btn-toggle">▶ Ver Memorial de Cálculo Acadêmico</button>
     
     <div id="conteudo-calculo" class="hidden">
         <div class="math-box-memorial">
-            <p style="font-size: 0.85rem; color: #555;">Cálculo analítico via Integral Dupla:</p>
+            <p style="font-size: 0.85rem; color: #555;">Cálculo analítico da energia térmica acumulada:</p>
 
             <strong>1. Definição da Integral:</strong>
-            \[ Q = \iint_D \rho \cdot c \cdot [150e^{-0,1(x^2+y^2)} + 40] \, dA \]
+            \[ Q = \iint_D \rho \cdot c \cdot T(x,y) \, dA \]
 
-            <strong>2. Linearidade (\( k = 0,594 \)):</strong>
-            \[ Q = \underbrace{k \iint_D 40 \, dA}_{Q_b} + \underbrace{89,1 \iint_D e^{-0,1x^2} e^{-0,1y^2} \, dA}_{Q_p} \]
+            <strong>2. Constantes e Linearidade:</strong>
+            <p style="font-size: 0.8rem;">Com \( \rho \cdot c = 0,594 \), separamos a base do pico:</p>
+            \[ Q = \underbrace{1.900,80}_{Q_{base}} + \underbrace{89,1 \iint_D e^{-0,1(x^2+y^2)} dA}_{Q_{pico}} \text{ cal} \]
 
-            <strong>3. Cálculo da Base (\( Q_b \)):</strong>
-            \[ Q_b = 0,594 \times 40 \times (10 \times 8) = 1.900,80 \text{ cal} \]
+            <strong>3. Cálculo da Base:</strong>
+            \[ Q_b = 0,594 \times 40 \times 80 = 1.900,80 \text{ cal} \]
 
-            <strong>4. Teorema de Fubini (Pico):</strong>
-            \[ Q_p = 89,1 \left( \int_{-5}^{5} e^{-0,1x^2} dx \right) \times \left( \int_{-4}^{4} e^{-0,1y^2} dy \right) \]
+            <strong>4. Resolução do Pico (Fubini):</strong>
+            <p style="font-size: 0.8rem;">Utilizando as integrais gaussianas fornecidas:</p>
+            \[ Q_p = 89,1 \times \left( \int_{-5}^{5} e^{-0,1x^2} dx \right) \times \left( \int_{-4}^{4} e^{-0,1y^2} dy \right) \]
             
-            <strong>5. Resultado do Pico:</strong>
-            <p style="font-size: 0.8rem;">Utilizando valores precisos para as integrais gaussianas:</p>
-            \[ Q_p \approx 89,1 \times 5,528 \times 5,406 \approx 2.663,68 \text{ cal} \]
+            <strong>5. Aproximação Numérica:</strong>
+            <p style="font-size: 0.8rem;">Substituindo os valores medidos (\( 4,64 \) e \( 6,44 \)):</p>
+            \[ Q_p \approx 89,1 \times 4,64 \times 6,444 \approx 2.663,68 \text{ cal} \]
 
             <div class="soma-final" style="border-top: 2px solid #2980b9; margin-top: 12px; padding-top: 8px; color: #2980b9;">
                 <p style="font-size: 0.85rem; margin-bottom: 5px; color: #555;"><strong>Composição Final:</strong></p>
-                <p style="font-size: 0.9rem; margin: 0;">\( Q_{total} = 1.900,80 + 2.663,68 \)</p>
+                <p style="font-size: 0.9rem; margin: 0;">\( Q_{total} = Q_{base} + Q_{pico} \)</p>
+                <p style="font-size: 0.9rem; margin: 5px 0;">\( Q_{total} = 1.900,80 + 2.663,68 \)</p>
                 <strong style="font-size: 1.1rem;">Total: \( Q \approx 4.564,48 \text{ cal} \)</strong>
             </div>
         </div>
     </div>
 
-    <!-- Botão de Análise (Conecta com seu script.js) -->
     <button class="btn-toggle-mini" id="btn-analise" style="background:#27ae60; margin-top:10px;">▶ Ver Interpretação Física</button>
 
     <div id="conteudo-analise" class="hidden">
         <div class="math-box-mini" style="border-left: 4px solid #27ae60; background: #f1f8e9; padding: 15px;">
             <strong style="font-size: 1rem; color: #2e7d32;">Interpretação Física:</strong>
-            
             <div style="font-size: 0.85rem; margin-top: 10px;">
-                <p><strong>1. Significado:</strong> O valor de 4.564,48 cal representa a energia térmica total. Matematicamente, é o volume sob a superfície \( T(x,y) \) ponderado pela densidade e calor específico.</p>
-                
-                <p><strong>2. Cenários:</strong></p>
-                <ul style="padding-left: 20px; margin-bottom: 10px;">
-                    <li><strong>Geometria:</strong> Aumentar a chapa expandiria a base de 40°C, elevando Q linearmente.</li>
-                    <li><strong>Materiais:</strong> O uso de cobre (maior calor específico) aumentaria a energia armazenada.</li>
-                </ul>
-
-                <p><strong>3. Engenharia:</strong> O pico de 190°C exige atenção à dilatação térmica, enquanto o valor de Q define o dimensionamento do sistema de resfriamento.</p>
+                <p><strong>Distribuição:</strong> Cerca de 41% da energia está concentrada no pico central (fonte de calor), enquanto 59% corresponde ao calor residual da base (40°C).</p>
+                <p><strong>Segurança:</strong> O valor total de 4.564,48 cal é compatível com a dissipação natural do alumínio para esta geometria.</p>
             </div>
         </div>
     </div>
